@@ -151,25 +151,88 @@ nav a:hover {
     background-color: #cb8133;
 }
 
-/* .step-btn {
-    display: inline-block;
-    padding: 8px 16px;
-    background-color: #a05305;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 14px;
-}
-
-.step-btn:hover {
-    background-color: #cb8133;
-} */
-
-
 /* Footer */
 footer {
     background: #333;
     color: #fff;
     text-align: center;
     padding: 25px;
+}
+
+/* Adoption Section */
+.adoption-section {
+    padding: 70px 8%;
+    background: #f7f9fc;
+}
+
+.adoption-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.adoption-header h2 {
+    /* color: #1e231e; */
+    font-size: 24px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.adoption-header h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.adoption-header p {
+    color: #555;
+}
+
+/* Form */
+.adoption-form {
+    max-width: 750px;
+    margin: auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 15px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.form-group textarea {
+    resize: none;
+    height: 90px;
+}
+
+.adopt-btn {
+    width: 60%;
+    padding: 14px;
+    background: #a05305;
+    color: #090707ed;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto 0;
+}
+
+.adopt-btn:hover {
+    background: #cb8133;
 }
