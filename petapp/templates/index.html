@@ -9,11 +9,28 @@
     <!-- Categories -->
     <section class="categories">
         <h1>Pet Categories</h1>
-        <div class="category-box">
-            <div class="card">🐶 Dogs</div>
-            <div class="card">🐱 Cats</div>
-            <div class="card">🐰 Rabbits</div>
-            <div class="card">🦜 Birds</div>
+        
+        <!-- The new grid where dynamic cards will be placed -->
+        <div class="category-grid" id="category-grid">
+            
+            {# This is the Django loop that builds the cards from your database data. #}
+            {% for category in categories %}
+            <div class="category-card">
+                <img src="{{ category.image.url }}" alt="Image of {{ category.name }}">
+                <div class="category-card-content">
+                    <h3>{{ category.name }}</h3>
+                    <p>{{ category.description|truncatewords:20 }}</p>
+                    <a href="{% url 'pet_list' category_name=category.name %}" class="btn">
+                        See All {{ category.name }}
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- "Load More" button container -->
+        <div class="load-more-container">
+            <button id="load-more-btn" class="btn">Load More</button>
         </div>
     </section>
 
@@ -33,7 +50,7 @@
     <section class="adoption-process">
     <h1>Adoption Process</h1>
     <h2>For Adopt Your Perfect One</h2>
-    <a href="{% url 'adoption_process' %}" class="adopt-btn">Click Here</a>
+    <a href="{% url 'adoption_process' %}" class="adoption-btn">Click Here</a>
     </section>
 
 </body>

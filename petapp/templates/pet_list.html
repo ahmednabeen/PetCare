@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ category.name }} For Adoption{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Available {{ category.name }}</h1>
+    <p>Browse our lovely {{ category.name|lower }} looking for a new home.</p>
+
+    <!-- Grid for the pet cards -->
+    <div class="pet-grid">
+        
+        {# The view will pass a paginated object called 'page_obj'. We loop through it. #}
+        {% for pet in page_obj %}
+        <div class="pet-card">
+            <img src="{{ pet.image.url }}" alt="Photo of {{ pet.name }}">
+            <div class="pet-card-content">
+                <h3>{{ pet.name }}</h3>
+                <ul>
+                    <li><strong>Species:</strong> {{ pet.species }}</li>
+                    <li><strong>Age:</strong> {{ pet.age }} years</li>
+                    <li>
+                        <strong>Availability:</strong> 
+                        {% if pet.is_available %}
+                            <span style="color: #28a745; font-weight: bold;">Available</span>
+                        {% else %}
+                            <span style="color: #dc3545; font-weight: bold;">Adopted</span>
+                        {% endif %}
+                    </li>
+                </ul>
+                {# The URL for this button will be made dynamic in the next steps #}
+                <a href="#" class="btn">Details</a>
+            </div>
+        </div>
+        {% empty %}
+            <p>Sorry, there are currently no {{ category.name|lower }} available for adoption.</p>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination Controls -->
+    {% if page_obj.has_other_pages %}
+    <div class="pagination">
+        <div class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}
