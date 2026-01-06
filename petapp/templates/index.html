@@ -1,38 +1,11 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PetCare | Find Your New Friend</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
+
+
+
+
+{% block content %}
 <body>
-
-    <!-- Header -->
-    <header>
-        <h1>PetCare</h1>
-        <nav>
-            <a href="#">Home</a>
-            <a href="#">About Us</a>
-            <a href="#">Contact Us</a>
-            <a href="#">services</a>
-            <a href="#">Blog</a>
-        </nav>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-text">
-            <h2>Find Your Perfect Pet Companion</h2>
-            <p>Adopt loving pets and give them a forever home.</p>
-            <a href="#" class="btn"><b>Browse Pets</b></a>
-        </div>
-        <div class="hero-img">
-            <img src="https://t3.ftcdn.net/jpg/08/78/21/48/360_F_878214857_LosWt38WtGoSCwFe7ObAvm45hEqF532K.jpg" alt="Pet">
-        </div>
-    </section>
-
     <!-- Categories -->
     <section class="categories">
         <h1>Pet Categories</h1>
@@ -63,11 +36,5 @@
     <a href="{% url 'adoption_process' %}" class="adopt-btn">Click Here</a>
     </section>
 
-
-    <!-- Footer -->
-    <footer>
-        <p>© 2026 PetCare. All rights reserved.</p>
-    </footer>
-
 </body>
-</html>
+{% endblock %}

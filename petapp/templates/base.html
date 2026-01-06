@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- This title will be the default, but can be changed on each page -->
+    <title>{% block title %}PetCare{% endblock %}</title>
+    
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <!-- Header: This will appear on every page -->
+    <header>
+        <h1>PetCare</h1>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">About Us</a>
+            <a href="#">Contact Us</a>
+            <a href="#">Services</a>
+            <a href="#">Blog</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-text">
+            <h2>Find Your Perfect Pet Companion</h2>
+            <p>Adopt loving pets and give them a forever home</p>
+            <a href="#" class="btn"><b>Browse Pets</b></a>
+        </div>
+        <div class="hero-img">
+            <img src="/media/images/combined.jpg" alt="Pet">
+        </div>
+    </section>
+
+    <main>
+        <!-- The main content for each specific page will be inserted here -->
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Footer: This will also appear on every page -->
+    <footer>
+        <p>© 2026 PetCare. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
