@@ -36,15 +36,15 @@
     </section>
 
     <main>
-        <!-- The main content for each specific page will be inserted here -->
-        {% block content %}
-        {% endblock %}
+        {% block content %}{% endblock %}
     </main>
 
     <!-- Footer: This will also appear on every page -->
     <footer>
         <p>© 2026 PetCare. All rights reserved.</p>
     </footer>
+
+    {% block javascript %}{% endblock %}
 
 </body>
 </html>
