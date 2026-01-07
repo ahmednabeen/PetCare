@@ -5,8 +5,11 @@
 
 {% block content %}
 <div class="container">
-    <h1>Available {{ category.name }}</h1>
-    <p>Browse our lovely {{ category.name|lower }} looking for a new home.</p>
+    <div class="container-head">
+        <h1>Our {{ category.name }} Collection</h1>
+        <br>
+        <h3>Browse our lovely {{ category.name|lower }} looking for a new home</h3>
+    </div>
 
     <!-- Grid for the pet cards -->
     <div class="pet-grid">
@@ -19,7 +22,7 @@
                 <h3>{{ pet.name }}</h3>
                 <ul>
                     <li><strong>Species:</strong> {{ pet.species }}</li>
-                    <li><strong>Age:</strong> {{ pet.age }} years</li>
+                    <li><strong>Average lifespan:</strong> {{ pet.average_lifespan }} years</li>
                     <li>
                         <strong>Availability:</strong> 
                         {% if pet.is_available %}

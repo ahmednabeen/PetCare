@@ -25,7 +25,7 @@ class Pet(models.Model):
 
     # --- Details for the list page ---
     species = models.CharField(max_length=100, help_text="e.g., Golden Retriever, Siamese")
-    age = models.PositiveIntegerField(help_text="Age in years")
+    average_lifespan = models.PositiveIntegerField(help_text="Age in years")
 
     # --- Details for the single pet page ---
     origin = models.CharField(max_length=100, blank=True)

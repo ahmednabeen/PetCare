@@ -56,7 +56,7 @@ nav a:hover {
 
 .btn {
     background: #a05305;
-    color: #090707ed;
+    color: #0d0707ed;
     padding: 12px 25px;
     text-decoration: none;
     border-radius: 24px;
@@ -85,25 +85,18 @@ nav a:hover {
     margin: 3rem auto;
 }
 
-/* The Grid Container */
 .category-grid {
     display: grid;
-    
-    /* --- KEY CHANGE HERE --- */
-    /* This explicitly creates 3 columns of equal width (1fr each). */
     grid-template-columns: 1fr 1fr 1fr; 
-    
-    /* The space between the cards (rows and columns) */
     gap: 25px; 
-    
-    margin-top: 20px; /* Space below the "Pet Categories" title */
+    margin-top: 20px; 
 }
 
 /* The individual category card (no changes needed here, but included for completeness) */
 .category-card {
     background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 8px 16px rgba(176, 60, 171, 0.08);
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -112,7 +105,7 @@ nav a:hover {
 
 .category-card:hover {
     transform: translateY(-5px); /* Lifts the card on hover */
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 8px 25px rgba(230, 124, 227, 0.12);
 }
 
 .category-card img {
@@ -140,16 +133,17 @@ nav a:hover {
 }
 
 .category-card .btn {
-    display: inline-block;
-    padding: 10px 20px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    padding: 10px 15px;
     background-color: #a05305;
     color: #090707ed;
     text-decoration: none;
-    border-radius: 5px;
+    border-radius: 10px;
     border: none;
     cursor: pointer;
     font-size: 1em;
-    text-align: center;
 }
 
 .load-more-container {
@@ -304,16 +298,21 @@ footer {
 /* --- Pet List Page Styles --- */
 
 .container {
+    text-align: center;
     max-width: 1200px;
     margin: 20px auto;
     padding: 0 20px;
 }
 
+.container-head{
+    margin: 4rem auto;
+}
+
 .btn {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
+    background-color: #a05305;
+    color: #0a0404;
     text-decoration: none;
     border-radius: 5px;
     border: none;
@@ -329,8 +328,7 @@ footer {
 
 .pet-grid {
     display: grid;
-    /* Creates a responsive grid of cards */
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Changed minmax for better spacing */
     gap: 25px;
 }
 
@@ -338,25 +336,34 @@ footer {
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    display: flex; /* Key for side-by-side image and content */
     overflow: hidden;
-    transition: box-shadow 0.3s ease;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
 }
 
 .pet-card:hover {
+    transform: translateY(-5px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
 }
 
-.pet-card img {
-    width: 150px;
+.pet-card-image {
+    width: 100%;
+    height: 220px; 
+    overflow: hidden;
+}
+
+.pet-card-image img {
+    width: 100%;
     height: 100%;
-    object-fit: cover; /* Ensures image is not stretched */
+    object-fit: cover; 
 }
 
 .pet-card-content {
     padding: 20px;
-    flex-grow: 1;
+    flex-grow: 1; 
     display: flex;
+    align-items: center;
     flex-direction: column;
 }
 
@@ -369,12 +376,21 @@ footer {
     list-style: none;
     padding: 0;
     margin: 10px 0;
-    flex-grow: 1; /* Pushes the button to the bottom */
+    flex-grow: 1; 
 }
 
 .pet-card-content li {
     margin-bottom: 8px;
     color: #444;
+}
+
+.pet-card-content .btn {
+    background-color: #8B4513;
+    width: 60%; 
+}
+
+.pet-card-content .btn:hover {
+    background-color: #A0522D;
 }
 
 .pagination {
