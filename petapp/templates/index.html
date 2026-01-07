@@ -4,7 +4,7 @@
 {% block content %}
     <!-- Categories -->
     <section class="categories">
-        <h1>Pet Categories</h1>
+        <h1 class="categories-h1">Pet Categories</h1>
         
         <div class="category-grid" id="category-grid">
             {# The initial categories are rendered here by Django #}
@@ -15,7 +15,7 @@
                     <h3>{{ category.name }}</h3>
                     <p>{{ category.description|truncatewords:20 }}</p>
                     <a href="{% url 'pet_list' category_name=category.name %}" class="btn">
-                        See All {{ category.name }}
+                        <b>See All {{ category.name }} </b>
                     </a>
                 </div>
             </div>
@@ -31,9 +31,6 @@
         {% endif %}
     </section>
 
-    <!-- ================================================================== -->
-    <!-- Your existing sections below are UNCHANGED -->
-    <!-- ================================================================== -->
     <section class="steps">
         <h2>Working Procedure</h2>
         <div class="step-box">
@@ -53,7 +50,7 @@
 {% endblock %}
 
 
-{# CHANGE 2: Add the JavaScript block at the end #}
+{# Add the JavaScript block at the end #}
 {% block javascript %}
 <script>
 document.addEventListener('DOMContentLoaded', function() {

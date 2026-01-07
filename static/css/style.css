@@ -72,18 +72,39 @@ nav a:hover {
 }
 
 /* Categories */
-.category-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 25px; /* Space between cards */
-    margin-top: 20px; /* Adds some space below the section title */
+.categories {
+    /* text-align: center; */
+    padding-left: 7rem;
+    padding-right: 7rem;
 }
 
+.categories-h1 {
+    text-align: center;
+    color: #333; /* Example style */
+    font-size: 2.5em; /* Example style */
+    margin: 3rem auto;
+}
+
+/* The Grid Container */
+.category-grid {
+    display: grid;
+    
+    /* --- KEY CHANGE HERE --- */
+    /* This explicitly creates 3 columns of equal width (1fr each). */
+    grid-template-columns: 1fr 1fr 1fr; 
+    
+    /* The space between the cards (rows and columns) */
+    gap: 25px; 
+    
+    margin-top: 20px; /* Space below the "Pet Categories" title */
+}
+
+/* The individual category card (no changes needed here, but included for completeness) */
 .category-card {
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    overflow: hidden; /* Important for keeping the image corners rounded */
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -96,7 +117,7 @@ nav a:hover {
 
 .category-card img {
     width: 100%;
-    height: 200px;
+    height: 250px;
     object-fit: cover; /* Ensures the image covers the area without being stretched */
 }
 
@@ -109,7 +130,7 @@ nav a:hover {
 
 .category-card-content h3 {
     margin-top: 0;
-    color: #0056b3; /* Example color */
+    color: #0d1217; /* Example color */
 }
 
 .category-card-content p {
@@ -121,8 +142,8 @@ nav a:hover {
 .category-card .btn {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
+    background-color: #a05305;
+    color: #090707ed;
     text-decoration: none;
     border-radius: 5px;
     border: none;
@@ -133,7 +154,7 @@ nav a:hover {
 
 .load-more-container {
     text-align: center;
-    margin-top: 40px;
+    margin: 3rem;
 }
 
 /* Steps */
@@ -303,7 +324,7 @@ footer {
 }
 
 .btn:hover {
-    background-color: #0056b3;
+    background-color: #cb8133;
 }
 
 .pet-grid {
