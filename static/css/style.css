@@ -388,3 +388,77 @@ footer {
 .pagination a:hover {
     background-color: #f0f0f0;
 }
+
+/* --- Pet Detail Page Styles --- */
+
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+.pet-detail-layout {
+    display: grid;
+    /* The image column takes up 1 fraction of space, the info column takes 1.5 */
+    grid-template-columns: 1fr 1.5fr;
+    gap: 40px; /* Space between the image and the info */
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
+    margin-top: 40px;
+}
+
+.pet-detail-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.pet-detail-info h1 {
+    margin-top: 0;
+    font-size: 2.5em;
+    color: #0056b3;
+}
+
+.pet-detail-info .availability {
+    font-size: 1.2em;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 5px;
+    display: inline-block;
+    margin-top: 10px;
+    margin-bottom: 25px;
+}
+
+.pet-detail-info .available {
+    color: #28a745; /* Green text */
+    background-color: #e9f7ec; /* Light green background */
+}
+
+.pet-detail-info .unavailable {
+    color: #dc3545; /* Red text */
+    background-color: #fbebed; /* Light red background */
+}
+
+.pet-detail-table {
+    width: 100%;
+    border-collapse: collapse; /* Removes space between table cells */
+}
+
+.pet-detail-table td {
+    padding: 14px 0;
+    border-bottom: 1px solid #eee; /* Light line between rows */
+    vertical-align: top;
+}
+
+.pet-detail-table td:first-child {
+    font-weight: bold;
+    color: #333;
+    width: 30%; /* Gives the labels a consistent width */
+}
+
+.pet-detail-table td:last-child {
+    color: #555;
+}

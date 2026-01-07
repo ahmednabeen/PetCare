@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ pet.name }} - Pet Details{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="pet-detail-layout">
+        
+        <!-- Left Column: Pet Image -->
+        <div class="pet-detail-image">
+            <img src="{{ pet.image.url }}" alt="Photo of {{ pet.name }}">
+        </div>
+
+        <!-- Right Column: Pet Information -->
+        <div class="pet-detail-info">
+            <h1>{{ pet.name }}</h1>
+            
+            {# Display a styled availability status badge #}
+            {% if pet.is_available %}
+                <p class="availability available">Available for Adoption</p>
+            {% else %}
+                <p class="availability unavailable">Already Adopted</p>
+            {% endif %}
+
+            {# A table for neatly organizing all the pet's details #}
+            <table class="pet-detail-table">
+                <tr>
+                    <td>Category</td>
+                    <td>{{ pet.category.name }}</td>
+                </tr>
+                <tr>
+                    <td>Species</td>
+                    <td>{{ pet.species }}</td>
+                </tr>
+                <tr>
+                    <td>Age</td>
+                    <td>{{ pet.age }} years</td>
+                </tr>
+                <tr>
+                    <td>Origin</td>
+                    {# The |default filter provides a fallback if the field is empty #}
+                    <td>{{ pet.origin|default:"N/A" }}</td>
+                </tr>
+                <tr>
+                    <td>Height</td>
+                    <td>{{ pet.height|default:"N/A" }} cm</td>
+                </tr>
+                <tr>
+                    <td>Weight</td>
+                    <td>{{ pet.weight|default:"N/A" }} kg</td>
+                </tr>
+                <tr>
+                    <td>Habits</td>
+                    {# The |linebreaksbr filter respects line breaks in your text fields #}
+                    <td>{{ pet.habitual_status|linebreaksbr|default:"N/A" }}</td>
+                </tr>
+                <tr>
+                    <td>Diet</td>
+                    <td>{{ pet.foods|linebreaksbr|default:"N/A" }}</td>
+                </tr>
+                <tr>
+                    <td>Vaccination</td>
+                    <td>{{ pet.vaccination|linebreaksbr|default:"N/A" }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
