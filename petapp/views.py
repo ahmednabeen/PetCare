@@ -68,3 +68,9 @@ def pet_detail_view(request, pet_id):
 
 def about(request):
     return render(request, "about.html")
+
+def contact(request):
+    return render(request, "contact.html")
+
+def services(request):
+    return render(request, "services.html")

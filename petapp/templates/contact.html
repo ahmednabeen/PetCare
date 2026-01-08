@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Contact Us{% endblock %}
+
+{% block content %}
+<section class="contact-section">
+
+    <div class="contact-container">
+        <h1>Contact Us</h1>
+        <p class="contact-intro">
+            Have questions about adoption, volunteering, or pet care?
+            We’d love to hear from you!
+        </p>
+
+        <div class="contact-grid">
+
+            <!-- Contact Info -->
+            <div class="contact-info">
+                <h3>📍 Get in Touch</h3>
+                <p><strong>Address:</strong> Dhaka, Bangladesh</p>
+                <p><strong>Email:</strong> support@petcare.com</p>
+                <p><strong>Phone:</strong> +880 1234 567890</p>
+
+                <div class="contact-social">
+                    <a href="#">Facebook</a>
+                    <a href="#">Instagram</a>
+                    <a href="#">Twitter</a>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="contact-form">
+                <h3>✉️ Send Us a Message</h3>
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <input type="text" name="name" placeholder="Your Name" required>
+                    <input type="email" name="email" placeholder="Your Email" required>
+                    <input type="text" name="subject" placeholder="Subject">
+                    <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+
+                    <button type="submit" class="btn">Send Message</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+{% endblock %}
