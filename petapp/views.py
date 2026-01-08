@@ -65,3 +65,6 @@ def pet_detail_view(request, pet_id):
         'pet': pet,
     }
     return render(request, 'pet_detail.html', context)
+
+def about(request):
+    return render(request, "about.html")

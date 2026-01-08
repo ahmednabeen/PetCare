@@ -7,4 +7,5 @@ urlpatterns = [
     path('category/<str:category_name>/', views.pet_list_view, name='pet_list'),
     path('pet/<int:pet_id>/', views.pet_detail_view, name='pet_detail'),
     path('api/load_more_categories/', views.load_more_categories, name='load_more_categories'),
+    path("about/", views.about, name="about"),
 ]
