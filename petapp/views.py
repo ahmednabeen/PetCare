@@ -43,35 +43,25 @@ def adoption_process(request):
     return render(request, 'adoption_process.html')
 
 def pet_list_view(request, category_name):
-
     category = get_object_or_404(Category, name__iexact=category_name)
-
     all_pets = Pet.objects.filter(category=category).order_by('name')
-
     paginator = Paginator(all_pets, 9) # 9 pets per page
-
     page_number = request.GET.get('page')
-
     try:
-
         page_obj = paginator.page(page_number)
     except PageNotAnInteger:
-
         page_obj = paginator.page(1)
     except EmptyPage:
-
         page_obj = paginator.page(paginator.num_pages)
-
     context = {
         'category': category,
         'page_obj': page_obj, # This contains the pets for the current page and pagination info
     }
-
     return render(request, 'pet_list.html', context)
+
 def pet_detail_view(request, pet_id):
     pet = get_object_or_404(Pet, id=pet_id)
     context = {
         'pet': pet,
     }
-   
     return render(request, 'pet_detail.html', context)

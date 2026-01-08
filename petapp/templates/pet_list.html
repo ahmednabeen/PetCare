@@ -5,6 +5,7 @@
 
 {% block content %}
 <div class="container">
+
     <div class="container-head">
         <h1>Our {{ category.name }} Collection</h1>
         <br>
@@ -13,54 +14,77 @@
 
     <!-- Grid for the pet cards -->
     <div class="pet-grid">
-        
-        {# The view will pass a paginated object called 'page_obj'. We loop through it. #}
         {% for pet in page_obj %}
-        <div class="pet-card">
-            <img src="{{ pet.image.url }}" alt="Photo of {{ pet.name }}">
-            <div class="pet-card-content">
-                <h3>{{ pet.name }}</h3>
-                <ul>
-                    <li><strong>Species:</strong> {{ pet.species }}</li>
-                    <li><strong>Average lifespan:</strong> {{ pet.average_lifespan }} years</li>
-                    <li>
-                        <strong>Availability:</strong> 
-                        {% if pet.is_available %}
-                            <span style="color: #28a745; font-weight: bold;">Available</span>
-                        {% else %}
-                            <span style="color: #dc3545; font-weight: bold;">Adopted</span>
-                        {% endif %}
-                    </li>
-                </ul>
-                {# The URL for this button will be made dynamic in the next steps #}
-                <a href="{% url 'pet_detail' pet_id=pet.id %}" class="btn">Details</a>
+            <div class="pet-card">
+
+                <!-- IMAGE WRAPPER -->
+                <div class="pet-card-image">
+                    <img src="{{ pet.image.url }}" alt="Photo of {{ pet.name }}">
+                </div>
+
+                <div class="pet-card-content">
+                    <h3>{{ pet.name }}</h3>
+                    <ul>
+                        <li><strong>Species:</strong> {{ pet.species }}</li>
+                        <li><strong>Average lifespan:</strong> {{ pet.average_lifespan }} years</li>
+                        <li>
+                            <strong>Availability:</strong>
+                            {% if pet.is_available %}
+                                <span style="color:#28a745;font-weight:bold;">Available</span>
+                            {% else %}
+                                <span style="color:#dc3545;font-weight:bold;">Adopted</span>
+                            {% endif %}
+                        </li>
+                    </ul>
+                    <a href="{% url 'pet_detail' pet_id=pet.id %}" class="btn">Details</a>
+                </div>
+
             </div>
-        </div>
         {% empty %}
             <p>Sorry, there are currently no {{ category.name|lower }} available for adoption.</p>
         {% endfor %}
-    </div>
+    </div> 
+
 
     <!-- Pagination Controls -->
     {% if page_obj.has_other_pages %}
-    <div class="pagination">
-        <div class="step-links">
-            {% if page_obj.has_previous %}
-                <a href="?page=1">&laquo; first</a>
-                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-            {% endif %}
+<div class="pagination">
+    <div class="pagination-inner">
 
-            <span class="current">
-                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
-            </span>
+        <!-- Previous -->
+        {% if page_obj.has_previous %}
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}"><b>Previous</b></a>
+        {% else %}
+            <span class="page-link disabled"><b>Previous</b></span>
+        {% endif %}
 
-            {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">next</a>
-                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        <!-- Page Numbers -->
+        {% for num in page_obj.paginator.page_range %}
+            {% if num == page_obj.number %}
+                <span class="page-number active">{{ num }}</span>
+
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <a class="page-number" href="?page={{ num }}">{{ num }}</a>
+
+            {% elif num == 1 or num == page_obj.paginator.num_pages %}
+                <a class="page-number" href="?page={{ num }}">{{ num }}</a>
+
+            {% elif num == page_obj.number|add:'-3' or num == page_obj.number|add:'3' %}
+                <span class="dots">…</span>
             {% endif %}
-        </div>
+        {% endfor %}
+
+        <!-- Next -->
+        {% if page_obj.has_next %}
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}"><b>Next</b></a>
+        {% else %}
+            <span class="page-link disabled"><b>Next</b></span>
+        {% endif %}
+
     </div>
-    {% endif %}
+</div>
+{% endif %}
+
 
 </div>
 {% endblock %}
