@@ -26,10 +26,12 @@
         {# CHANGE 1: Only show the button if there is a next page #}
         {% if categories.has_next %}
         <div class="load-more-container">
-            <button id="load-more-btn" class="btn">Load More</button>
+            <button id="load-more-btn" class="btn"><b>Load More</b></button>
         </div>
         {% endif %}
     </section>
+
+    <!-- Working Procedure -->
 
     <section class="steps">
         <h2>Working Procedure</h2>
@@ -54,39 +56,33 @@
 document.addEventListener('DOMContentLoaded', function() {
     const loadMoreBtn = document.getElementById('load-more-btn');
     const categoryGrid = document.getElementById('category-grid');
-    
-    // The initial page is 1, so the next page to fetch will be 2.
     let currentPage = 1;
 
-    // Only add the event listener if the button exists on the page.
     if (loadMoreBtn) {
         loadMoreBtn.addEventListener('click', function() {
-            currentPage++; // Go to the next page
-            
-            // Use fetch to call our API endpoint.
+            currentPage++;
+
             fetch(`/api/load_more_categories/?page=${currentPage}`)
                 .then(response => response.json())
                 .then(data => {
-                    // Loop through the new categories returned from the server.
                     data.categories.forEach(category => {
-                        // Create a new div for the card.
                         const card = document.createElement('div');
                         card.classList.add('category-card');
-                        
-                        // Populate the card's HTML with the data.
+
                         card.innerHTML = `
                             <img src="${category.image_url}" alt="Image of ${category.name}">
                             <div class="category-card-content">
                                 <h3>${category.name}</h3>
                                 <p>${category.description.substring(0, 120)}...</p>
-                                <a href="/category/${category.name}/" class="btn">See All</a>
+                                <a href="/category/${encodeURIComponent(category.name)}/" class="btn">
+                                    <b>See All ${category.name}</b>
+                                </a>
                             </div>
                         `;
-                        // Add the new card to the grid.
+
                         categoryGrid.appendChild(card);
                     });
-                    
-                    // If the server response indicates there are no more pages, hide the button.
+
                     if (!data.has_next) {
                         loadMoreBtn.parentElement.style.display = 'none';
                     }
@@ -97,3 +93,4 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 {% endblock %}
+
