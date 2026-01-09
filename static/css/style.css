@@ -10,10 +10,29 @@ body {
     color: #4a4747;
 }
 
+/* logo css */
+
+.logo-title {
+    display: flex;
+    align-items: center;
+}
+
+.site-logo {
+    position: relative;
+    width: 45px;
+    height: auto;
+    border-radius: 50%;
+    margin-right: 12px;
+}
+.site-logo:hover {
+    transform: scale(1.1);
+    transition: 0.3s ease;
+}
+
 /* Header */
 header {
-    background: #5165a5;
-    padding: 15px 8%;
+    background: #6e7cd6;
+    padding: 25px 10%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -25,10 +44,18 @@ nav a {
     margin-left: 20px;
     text-decoration: none;
     font-weight: bold;
+    font-size: 18px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
 }
 
 nav a:hover {
     text-decoration: underline;
+    background-color: #3551af;    
+    color: #fff;                 
+    text-decoration: none;      
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 /* Hero */
@@ -214,10 +241,12 @@ nav a:hover {
 
 /* Footer */
 footer {
-    background: #333;
+    background: #6e7cd6;
     color: #fff;
+    font-size: 18px;
+    font-weight: bold;
     text-align: center;
-    padding: 25px;
+    padding: 35px;
 }
 
 /* Adoption Section */
