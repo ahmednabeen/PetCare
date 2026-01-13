@@ -1,5 +1,5 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Category, Pet
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Category, Pet, AdoptionApplication, ContactMessage
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import JsonResponse
 
@@ -74,3 +74,29 @@ def contact(request):
 
 def services(request):
     return render(request, "services.html")
+
+def adoption_process(request):
+    if request.method == "POST":
+        AdoptionApplication.objects.create(
+            name=request.POST.get("name"),
+            email=request.POST.get("email"),
+            phone=request.POST.get("phone"),
+            address=request.POST.get("address"),
+            pet_name=request.POST.get("pet_name"),
+            message=request.POST.get("message"),
+        )
+        return redirect("adoption_process")  # reload page after submit
+
+    return render(request, "adoption_process.html")
+
+def contact(request):
+    if request.method == "POST":
+        ContactMessage.objects.create(
+            name=request.POST.get("name"),
+            email=request.POST.get("email"),
+            subject=request.POST.get("subject"),
+            message=request.POST.get("message"),
+        )
+        return redirect("contact")
+
+    return render(request, "contact.html")
