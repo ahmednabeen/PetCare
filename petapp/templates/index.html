@@ -7,7 +7,6 @@
         <h1 class="categories-h1">Pet Categories</h1>
         
         <div class="category-grid" id="category-grid">
-            {# The initial categories are rendered here by Django #}
             {% for category in categories %}
             <div class="category-card">
                 <img src="{{ category.image.url }}" alt="Image of {{ category.name }}">
@@ -22,8 +21,6 @@
             {% endfor %}
         </div>
 
-        <!-- "Load More" button container -->
-        {# CHANGE 1: Only show the button if there is a next page #}
         {% if categories.has_next %}
         <div class="load-more-container">
             <button id="load-more-btn" class="btn"><b>Load More</b></button>
@@ -50,6 +47,7 @@
     </section>
 
 {% endblock %}
+
 
 {% block javascript %}
 <script>

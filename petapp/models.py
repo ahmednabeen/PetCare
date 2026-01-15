@@ -7,7 +7,7 @@ class Category(models.Model):
     description = models.TextField(help_text="A short article about this category.")
 
     class Meta:
-        verbose_name_plural = "Categories" # Fixes the admin panel's pluralization
+        verbose_name_plural = "Categories"
 
     def __str__(self):
         return self.name
@@ -18,15 +18,12 @@ class Pet(models.Model):
     name = models.CharField(max_length=100)
     image = models.ImageField(upload_to='pet_images/', help_text="Image of the pet")
     is_available = models.BooleanField(default=True, help_text="Is this pet available for adoption?")
-    
     # --- Relationship to Category ---
     # This is the crucial link. Each pet belongs to one category.
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="pets")
-
     # --- Details for the list page ---
     species = models.CharField(max_length=100, help_text="e.g., Golden Retriever, Siamese")
     average_lifespan = models.PositiveIntegerField(help_text="Age in years")
-
     # --- Details for the single pet page ---
     origin = models.CharField(max_length=100, blank=True)
     height = models.DecimalField(max_digits=5, decimal_places=2, help_text="Height in cm", blank=True, null=True)
@@ -47,17 +44,20 @@ class AdoptionApplication(models.Model):
     address = models.TextField()
     pet_name = models.CharField(max_length=100, blank=True)
     message = models.TextField(blank=True)
+    admin_reply = models.TextField(blank=True)
+    replied = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
-
     def __str__(self):
         return self.name
+
 class ContactMessage(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
     subject = models.CharField(max_length=200, blank=True)
     message = models.TextField()
+    admin_reply = models.TextField(blank=True)
+    replied = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
-
     def __str__(self):
         return self.name
 

@@ -107,8 +107,8 @@ nav a:hover {
 
 .categories-h1 {
     text-align: center;
-    color: #333; /* Example style */
-    font-size: 2.5em; /* Example style */
+    color: #333;
+    font-size: 2.5em; 
     margin: 3rem auto;
 }
 
@@ -119,7 +119,6 @@ nav a:hover {
     margin-top: 20px; 
 }
 
-/* The individual category card (no changes needed here, but included for completeness) */
 .category-card {
     background-color: #fff;
     border-radius: 8px;
@@ -131,30 +130,30 @@ nav a:hover {
 }
 
 .category-card:hover {
-    transform: translateY(-5px); /* Lifts the card on hover */
+    transform: translateY(-5px); 
     box-shadow: 0 8px 25px rgba(230, 124, 227, 0.12);
 }
 
 .category-card img {
     width: 100%;
     height: 250px;
-    object-fit: cover; /* Ensures the image covers the area without being stretched */
+    object-fit: cover; 
 }
 
 .category-card-content {
     padding: 20px;
-    flex-grow: 1; /* This makes the content area expand */
+    flex-grow: 1; 
     display: flex;
     flex-direction: column;
 }
 
 .category-card-content h3 {
     margin-top: 0;
-    color: #0d1217; /* Example color */
+    color: #0d1217;
 }
 
 .category-card-content p {
-    flex-grow: 1; /* This pushes the button to the bottom of the card */
+    flex-grow: 1; 
     margin-bottom: 20px;
     color: #555;
 }
@@ -261,7 +260,6 @@ footer {
 }
 
 .adoption-header h2 {
-    /* color: #1e231e; */
     font-size: 24px;
     text-transform: uppercase;
     margin-bottom: 10px;
@@ -360,7 +358,7 @@ footer {
 
 .pet-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Changed minmax for better spacing */
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 25px;
 }
 
@@ -488,9 +486,8 @@ footer {
 
 .pet-detail-layout {
     display: grid;
-    /* The image column takes up 1 fraction of space, the info column takes 1.5 */
     grid-template-columns: 1fr 1.5fr;
-    gap: 40px; /* Space between the image and the info */
+    gap: 40px; 
     background-color: #fff;
     padding: 40px;
     border-radius: 12px;
@@ -522,30 +519,30 @@ footer {
 }
 
 .pet-detail-info .available {
-    color: #28a745; /* Green text */
-    background-color: #e9f7ec; /* Light green background */
+    color: #28a745; 
+    background-color: #e9f7ec; 
 }
 
 .pet-detail-info .unavailable {
-    color: #dc3545; /* Red text */
-    background-color: #fbebed; /* Light red background */
+    color: #dc3545;
+    background-color: #fbebed;
 }
 
 .pet-detail-table {
     width: 100%;
-    border-collapse: collapse; /* Removes space between table cells */
+    border-collapse: collapse; 
 }
 
 .pet-detail-table td {
     padding: 14px 0;
-    border-bottom: 1px solid #eee; /* Light line between rows */
+    border-bottom: 1px solid #eee; 
     vertical-align: top;
 }
 
 .pet-detail-table td:first-child {
     font-weight: bold;
     color: #333;
-    width: 30%; /* Gives the labels a consistent width */
+    width: 30%; 
 }
 
 .pet-detail-table td:last-child {
@@ -553,7 +550,7 @@ footer {
 }
 
 
-/* About Us Page Css Codes */
+/* About Us Page Css  */
 
 .about-section {
     background: #f9f9f9;
@@ -798,3 +795,154 @@ footer {
     color: #555;
     line-height: 1.6;
 }
+
+
+@media (max-width: 1024px) {
+
+    header {
+        padding: 20px 5%;
+    }
+
+    .hero {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+    }
+
+    .hero-text {
+        max-width: 100%;
+    }
+
+    .hero-img img {
+        width: 350px;
+    }
+
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .step-box {
+        flex-wrap: wrap;
+    }
+
+    .pet-detail-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+
+    /* Header */
+    header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    nav a {
+        display: inline-block;
+        margin: 8px;
+        font-size: 16px;
+    }
+
+    /* Hero */
+    .hero {
+        padding: 40px 5%;
+    }
+
+    .hero-text h2 {
+        font-size: 30px;
+    }
+
+    .hero-text p {
+        font-size: 16px;
+    }
+
+    .hero-img img {
+        width: 100%;
+        max-width: 320px;
+    }
+
+    /* Categories */
+    .categories {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+
+    .category-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Steps */
+    .step-box {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .step {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    /* Adoption Form */
+    .adoption-form {
+        padding: 20px;
+    }
+
+    .adopt-btn {
+        width: 100%;
+    }
+
+    /* Pet Cards */
+    .pet-card-image {
+        height: 220px;
+    }
+
+    /* Contact */
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Footer */
+    footer {
+        font-size: 16px;
+        padding: 25px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .hero-text h2 {
+        font-size: 24px;
+    }
+
+    .hero-text p {
+        font-size: 15px;
+    }
+
+    .btn {
+        font-size: 15px;
+        padding: 10px 20px;
+    }
+
+    .categories-h1 {
+        font-size: 2em;
+    }
+
+    .pet-detail-info h1 {
+        font-size: 1.8em;
+    }
+
+    .contact-container h1 {
+        font-size: 28px;
+    }
+
+    .about-container h1 {
+        font-size: 28px;
+    }
+
+    .services-container h1 {
+        font-size: 28px;
+    }
+}
+

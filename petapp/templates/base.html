@@ -5,14 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- This title will be the default, but can be changed on each page -->
     <title>{% block title %}PetCare{% endblock %}</title>
     
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-
-    <!-- Header: This will appear on every page -->
     <header>
         <div class="logo-title">
             <img src="{% static 'logo.png' %}" alt="PetCare Logo" class="site-logo">
@@ -43,7 +40,7 @@
         {% block content %}{% endblock %}
     </main>
 
-    <!-- Footer: This will also appear on every page -->
+
     <footer>
         <p>© 2026 PetCare. All rights reserved.</p>
     </footer>

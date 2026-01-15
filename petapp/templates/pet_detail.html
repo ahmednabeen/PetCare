@@ -6,24 +6,20 @@
 {% block content %}
 <div class="container">
     <div class="pet-detail-layout">
-        
-        <!-- Left Column: Pet Image -->
         <div class="pet-detail-image">
             <img src="{{ pet.image.url }}" alt="Photo of {{ pet.name }}">
         </div>
-
-        <!-- Right Column: Pet Information -->
         <div class="pet-detail-info">
             <h1>{{ pet.name }}</h1>
             
-            {# Display a styled availability status badge #}
+            
             {% if pet.is_available %}
                 <p class="availability available">Available for Adoption</p>
             {% else %}
                 <p class="availability unavailable">Already Adopted</p>
             {% endif %}
 
-            {# A table for neatly organizing all the pet's details #}
+            
             <table class="pet-detail-table">
                 <tr>
                     <td>Category</td>
@@ -39,7 +35,6 @@
                 </tr>
                 <tr>
                     <td>Origin</td>
-                    {# The |default filter provides a fallback if the field is empty #}
                     <td>{{ pet.origin|default:"N/A" }}</td>
                 </tr>
                 <tr>
@@ -52,7 +47,6 @@
                 </tr>
                 <tr>
                     <td>Habits</td>
-                    {# The |linebreaksbr filter respects line breaks in your text fields #}
                     <td>{{ pet.habitual_status|linebreaksbr|default:"N/A" }}</td>
                 </tr>
                 <tr>

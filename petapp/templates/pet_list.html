@@ -17,11 +17,9 @@
         {% for pet in page_obj %}
             <div class="pet-card">
 
-                <!-- IMAGE WRAPPER -->
                 <div class="pet-card-image">
                     <img src="{{ pet.image.url }}" alt="Photo of {{ pet.name }}">
                 </div>
-
                 <div class="pet-card-content">
                     <h3>{{ pet.name }}</h3>
                     <ul>
@@ -46,7 +44,7 @@
     </div> 
 
 
-    <!-- Pagination Controls -->
+    <!-- Pagination -->
     {% if page_obj.has_other_pages %}
 <div class="pagination">
     <div class="pagination-inner">
