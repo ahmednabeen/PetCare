@@ -50,45 +50,6 @@
 
 
 {% block javascript %}
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const loadMoreBtn = document.getElementById('load-more-btn');
-    const categoryGrid = document.getElementById('category-grid');
-    let currentPage = 1;
-
-    if (loadMoreBtn) {
-        loadMoreBtn.addEventListener('click', function() {
-            currentPage++;
-
-            fetch(`/api/load_more_categories/?page=${currentPage}`)
-                .then(response => response.json())
-                .then(data => {
-                    data.categories.forEach(category => {
-                        const card = document.createElement('div');
-                        card.classList.add('category-card');
-
-                        card.innerHTML = `
-                            <img src="${category.image_url}" alt="Image of ${category.name}">
-                            <div class="category-card-content">
-                                <h3>${category.name}</h3>
-                                <p>${category.description.substring(0, 120)}...</p>
-                                <a href="/category/${encodeURIComponent(category.name)}/" class="btn">
-                                    <b>See All ${category.name}</b>
-                                </a>
-                            </div>
-                        `;
-
-                        categoryGrid.appendChild(card);
-                    });
-
-                    if (!data.has_next) {
-                        loadMoreBtn.parentElement.style.display = 'none';
-                    }
-                })
-                .catch(error => console.error('Error loading more categories:', error));
-        });
-    }
-});
-</script>
+<script src="{% static 'js/main.js' %}"></script>
 {% endblock %}
 
