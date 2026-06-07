@@ -49,6 +49,7 @@ class AboutFeature(models.Model):
 
 class WhyChooseUsItem(models.Model):
     text = models.CharField(max_length=300)
+    icon = models.CharField(max_length=50, help_text="Emoji or icon text", blank=True)
     order = models.PositiveIntegerField(default=0)
 
     class Meta:

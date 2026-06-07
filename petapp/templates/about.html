@@ -24,11 +24,14 @@
         {% if all_why_choose_us %}
         <div class="about-extra">
             <h2>Why Choose PetCare?</h2>
-            <ul>
+            <div class="about-grid">
                 {% for item in all_why_choose_us %}
-                <li>✔ {{ item.text }}</li>
+                <div class="about-card">
+                    <h3>{% if item.icon %}{{ item.icon }}{% endif %}</h3>
+                    <p>{{ item.text }}</p>
+                </div>
                 {% endfor %}
-            </ul>
+            </div>
         </div>
         {% endif %}
     </div>

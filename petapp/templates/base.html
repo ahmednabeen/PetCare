@@ -40,7 +40,45 @@
 
 
     <footer>
-        <p>{{ site_settings.footer_text|default:"© 2026 PetCare. All rights reserved." }}</p>
+        <div class="footer-content">
+            <div class="footer-col">
+                <h3>PetCare</h3>
+                <p>{{ site_settings.footer_about|default:"Your trusted platform for pet adoption. Giving pets a loving forever home." }}</p>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <a href="{% url 'about' %}">About Us</a>
+                <a href="{% url 'services' %}">Services</a>
+                <a href="{% url 'contact' %}">Contact</a>
+                <a href="{% url 'adoption_process' %}">Adoption</a>
+            </div>
+            <div class="footer-col">
+                <h3>Contact</h3>
+                <p>{{ site_settings.contact_address|default:"Dhaka, Bangladesh" }}</p>
+                <p>{{ site_settings.contact_email|default:"support@petcare.com" }}</p>
+                <p>{{ site_settings.contact_phone|default:"+880 1234 567890" }}</p>
+            </div>
+            <div class="footer-col">
+                <h3>Follow Us</h3>
+                <div class="footer-social">
+                    <a href="#" class="social-facebook">
+                        <span class="social-icon">f</span>
+                        <span>Facebook</span>
+                    </a>
+                    <a href="#" class="social-twitter">
+                        <span class="social-icon">𝕏</span>
+                        <span>Twitter</span>
+                    </a>
+                    <a href="#" class="social-instagram">
+                        <span class="social-icon">◻</span>
+                        <span>Instagram</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>{{ site_settings.footer_text|default:"© 2026 PetCare. All rights reserved." }}</p>
+        </div>
     </footer>
 
     {% block javascript %}{% endblock %}
