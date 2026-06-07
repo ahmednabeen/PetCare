@@ -11,13 +11,12 @@
 </head>
 <body>
     <header>
-        <div class="logo-title">
+        <a href="{% url 'home' %}" class="logo-title">
             <img src="{% static 'logo.png' %}" alt="PetCare Logo" class="site-logo">
             <h1>PetCare</h1>
-        </div>
+        </a>
 
         <nav>
-            <a href="{% url 'home' %}">Home</a>
             <a href="{% url 'about' %}">About Us</a>
             <a href="{% url 'contact' %}">Contact Us</a>
             <a href="{% url 'services' %}">Services</a>
@@ -27,9 +26,8 @@
 
     <section class="hero">
         <div class="hero-text">
-            <h2>Find Your Perfect Pet Companion</h2>
-            <p>Adopt loving pets and give them a forever home</p>
-            {% comment %} <a href="#" class="btn"><b>Browse Pets</b></a> {% endcomment %}
+            <h2>{{ site_settings.hero_title|default:"Find Your Perfect Pet Companion" }}</h2>
+            <p>{{ site_settings.hero_subtitle|default:"Adopt loving pets and give them a forever home" }}</p>
         </div>
         <div class="hero-img">
             <img src="/media/images/combined.jpg" alt="Pet">
@@ -42,7 +40,7 @@
 
 
     <footer>
-        <p>© 2026 PetCare. All rights reserved.</p>
+        <p>{{ site_settings.footer_text|default:"© 2026 PetCare. All rights reserved." }}</p>
     </footer>
 
     {% block javascript %}{% endblock %}

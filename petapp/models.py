@@ -1,5 +1,65 @@
 from django.db import models
 
+class SiteSetting(models.Model):
+    key = models.CharField(max_length=100, unique=True)
+    value = models.TextField(blank=True)
+
+    class Meta:
+        verbose_name = "Site Setting"
+        verbose_name_plural = "Site Settings"
+
+    def __str__(self):
+        return self.key
+
+class Service(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    icon = models.CharField(max_length=50, help_text="Emoji or icon text", blank=True)
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return self.title
+
+class WorkingStep(models.Model):
+    number = models.PositiveIntegerField(unique=True)
+    title = models.CharField(max_length=200)
+
+    class Meta:
+        ordering = ['number']
+
+    def __str__(self):
+        return f"{self.number}. {self.title}"
+
+class AboutFeature(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    icon = models.CharField(max_length=50, help_text="Emoji or icon text", blank=True)
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ['order']
+        verbose_name = "About Feature"
+        verbose_name_plural = "About Features"
+
+    def __str__(self):
+        return self.title
+
+class WhyChooseUsItem(models.Model):
+    text = models.CharField(max_length=300)
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ['order']
+        verbose_name = "Why Choose Us Item"
+
+    def __str__(self):
+        return self.text
+
+
+
 class Category(models.Model):
     """Represents a category of pets, e.g., Dogs, Cats."""
     name = models.CharField(max_length=100, unique=True)

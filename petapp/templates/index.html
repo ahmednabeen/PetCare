@@ -21,35 +21,59 @@
             {% endfor %}
         </div>
 
-        {% if categories.has_next %}
-        <div class="load-more-container">
-            <button id="load-more-btn" class="btn"><b>Load More</b></button>
+        {% if total_pages > 1 %}
+        <div class="pagination">
+            <div class="pagination-inner">
+                {% if has_previous %}
+                <a class="page-link" href="?page={{ prev_page }}"><b>Previous</b></a>
+                {% endif %}
+
+                {% if page_number > 3 %}
+                <a class="page-number" href="?page=1">1</a>
+                {% if page_number > 4 %}<span class="dots">...</span>{% endif %}
+                {% endif %}
+
+                {% for num in ""|ljust:total_pages %}
+                    {% with page_num=forloop.counter %}
+                        {% if page_num >= page_number|add:"-2" and page_num <= page_number|add:"2" %}
+                            {% if page_num == page_number %}
+                            <span class="page-number active">{{ page_num }}</span>
+                            {% else %}
+                            <a class="page-number" href="?page={{ page_num }}">{{ page_num }}</a>
+                            {% endif %}
+                        {% endif %}
+                    {% endwith %}
+                {% endfor %}
+
+                {% if page_number < total_pages|add:"-2" %}
+                    {% if page_number < total_pages|add:"-3" %}<span class="dots">...</span>{% endif %}
+                    <a class="page-number" href="?page={{ total_pages }}">{{ total_pages }}</a>
+                {% endif %}
+
+                {% if has_next %}
+                <a class="page-link" href="?page={{ next_page }}"><b>Next</b></a>
+                {% endif %}
+            </div>
         </div>
         {% endif %}
     </section>
 
-    <!-- Working Procedure -->
-
+    {% if all_working_steps %}
     <section class="steps">
         <h2>Working Procedure</h2>
         <div class="step-box">
-            <div class="step">1 <br>Browse Pets</div>
-            <div class="step">2 <br>Choose One</div>
-            <div class="step">3 <br>Application</div>
-            <div class="step">4 <br>Adopt & Love</div>
+            {% for step in all_working_steps %}
+            <div class="step">{{ step.number }} <br>{{ step.title }}</div>
+            {% endfor %}
         </div>
     </section>
+    {% endif %}
 
     <section class="adoption-process">
-        <h1>Adoption Process</h1>
-        <h2>For Adopt Your Perfect One</h2>
+        <h1>{{ site_settings.adoption_process_heading|default:"Adoption Process" }}</h1>
+        <h2>{{ site_settings.adoption_process_subheading|default:"For Adopt Your Perfect One" }}</h2>
         <a href="{% url 'adoption_process' %}" class="adoption-btn">Click Here</a>
     </section>
 
-{% endblock %}
-
-
-{% block javascript %}
-<script src="{% static 'js/main.js' %}"></script>
 {% endblock %}
 

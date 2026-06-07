@@ -7,9 +7,9 @@
 
 <section class="adoption-section">
     <div class="adoption-header">
-        <h2>Adoption Process</h2>
-        <h1>For adopt your perfect pet</h1>
-        <p>Please fill out the form below to start your adoption journey.</p>
+        <h2>{{ site_settings.adoption_process_heading|default:"Adoption Process" }}</h2>
+        <h1>{{ site_settings.adoption_process_subheading|default:"For adopt your perfect pet" }}</h1>
+        <p>{{ site_settings.adoption_process_text|default:"Please fill out the form below to start your adoption journey." }}</p>
     </div>
     
 

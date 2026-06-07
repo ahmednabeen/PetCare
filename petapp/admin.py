@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.core.mail import send_mail
 from django.conf import settings
-from .models import Category, Pet, AdoptionApplication, ContactMessage
+from .models import Category, Pet, AdoptionApplication, ContactMessage, SiteSetting, Service, WorkingStep, AboutFeature, WhyChooseUsItem
 
 
 class PetAdmin(admin.ModelAdmin):
@@ -73,3 +73,9 @@ class AdoptionApplicationAdmin(admin.ModelAdmin):
             )
             obj.replied = True
         super().save_model(request, obj, form, change)
+
+admin.site.register(SiteSetting)
+admin.site.register(Service)
+admin.site.register(WorkingStep)
+admin.site.register(AboutFeature)
+admin.site.register(WhyChooseUsItem)
