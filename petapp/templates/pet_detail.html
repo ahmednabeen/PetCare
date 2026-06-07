@@ -10,7 +10,7 @@
             <img src="{{ pet.image.url }}" alt="Photo of {{ pet.name }}">
         </div>
         <div class="pet-detail-info">
-            <h1>{{ pet.name }}</h1>
+            <h1>{{ pet.name }} <span class="pet-id-badge">#{{ pet.pet_id }}</span></h1>
             
             
             {% if pet.is_available %}
@@ -58,6 +58,12 @@
                     <td>{{ pet.vaccination|linebreaksbr|default:"N/A" }}</td>
                 </tr>
             </table>
+
+            {% if pet.is_available %}
+            <div class="adopt-button-wrapper">
+                <a href="{% url 'adoption_process' %}?pet={{ pet.pet_id|urlencode }}" class="adopt-btn">Adopt {{ pet.name }}</a>
+            </div>
+            {% endif %}
         </div>
     </div>
 </div>

@@ -40,9 +40,6 @@ def load_more_categories(request):
         'has_next': has_next,
     })
 
-def adoption_process(request): 
-    return render(request, 'adoption_process.html')
-
 def pet_list_view(request, category_name):
     category = get_object_or_404(Category, name__iexact=category_name)
     all_pets = Pet.objects.filter(category=category).order_by('name')
@@ -70,9 +67,6 @@ def pet_detail_view(request, pet_id):
 def about(request):
     return render(request, "about.html")
 
-def contact(request):
-    return render(request, "contact.html")
-
 def services(request):
     return render(request, "services.html")
 
@@ -88,7 +82,8 @@ def adoption_process(request):
         )
         return redirect("adoption_process") 
 
-    return render(request, "adoption_process.html")
+    pet_name = request.GET.get("pet", "")
+    return render(request, "adoption_process.html", {"preset_pet": pet_name})
 
 def contact(request):
     if request.method == "POST":

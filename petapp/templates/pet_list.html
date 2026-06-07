@@ -21,7 +21,7 @@
                     <img src="{{ pet.image.url }}" alt="Photo of {{ pet.name }}">
                 </div>
                 <div class="pet-card-content">
-                    <h3>{{ pet.name }}</h3>
+                    <h3>{{ pet.name }} <span class="pet-id-badge">#{{ pet.pet_id }}</span></h3>
                     <ul>
                         <li><strong>Species:</strong> {{ pet.species }}</li>
                         <li><strong>Average lifespan:</strong> {{ pet.average_lifespan }} years</li>
