@@ -10,7 +10,8 @@
             <img src="{{ pet.image.url }}" alt="Photo of {{ pet.name }}">
         </div>
         <div class="pet-detail-info">
-            <h1>{{ pet.name }} <span class="pet-id-badge">#{{ pet.pet_id }}</span></h1>
+            <h1>{{ pet.name }}</h1>
+            <p class="pet-id-line">ID: {{ pet.pet_id }}</p>
             
             
             {% if pet.is_available %}

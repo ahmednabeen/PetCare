@@ -8,7 +8,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-!774weh#myyliren_ki2otbonu#c^gnb!plqlvho#db9zectdg'
+SECRET_KEY = 'dg@*4zbfhf33#bh#8xif2_$cp-p6u488xv8dh6iwvg#yp=is51'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -16,7 +16,29 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '127.0.0.1',
     'localhost',
+    '.onrender.com',
+    '.vercel.app',
 ]
+
+SECURE_SSL_REDIRECT = False
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
+SECURE_HSTS_SECONDS = 0
+CSRF_TRUSTED_ORIGINS = [
+    'http://127.0.0.1',
+    'http://localhost',
+]
+
+# --- Production settings (uncomment when deploying) ---
+# DEBUG = False
+# ALLOWED_HOSTS = ['.onrender.com', '.vercel.app', 'yourdomain.com']
+# SECURE_SSL_REDIRECT = True
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
+# SECURE_HSTS_SECONDS = 31536000
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+# SECURE_HSTS_PRELOAD = True
+# CSRF_TRUSTED_ORIGINS = ['https://*.onrender.com', 'https://*.vercel.app']
 
 
 # Application definition
@@ -46,7 +68,7 @@ ROOT_URLCONF = 'petproject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

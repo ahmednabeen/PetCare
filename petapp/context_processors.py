@@ -1,3 +1,4 @@
+import time
 from .models import SiteSetting, Service, WorkingStep, AboutFeature, WhyChooseUsItem, Category, Pet
 
 def site_settings(request):
@@ -20,4 +21,5 @@ def site_data(request):
         'all_about_features': AboutFeature.objects.all(),
         'all_why_choose_us': WhyChooseUsItem.objects.all(),
         'nav_categories': nav_categories,
+        'static_version': int(time.time()),
     }

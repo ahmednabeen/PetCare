@@ -42,7 +42,11 @@ def home(request):
 
 def pet_list_view(request, category_name):
     category = get_object_or_404(Category, name__iexact=category_name)
-    all_pets = Pet.objects.filter(category=category).order_by('name')
+    all_pets = Pet.objects.filter(category=category)
+    species_filter = request.GET.get('species')
+    if species_filter:
+        all_pets = all_pets.filter(species__iexact=species_filter)
+    all_pets = all_pets.order_by('name')
     paginator = Paginator(all_pets, 9) 
     page_number = request.GET.get('page')
     try:
@@ -54,6 +58,7 @@ def pet_list_view(request, category_name):
     context = {
         'category': category,
         'page_obj': page_obj, 
+        'current_species': species_filter,
     }
     return render(request, 'pet_list.html', context)
 
