@@ -1,4 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.core.mail import send_mail
+from django.conf import settings
 from .models import Category, Pet, AdoptionApplication, ContactMessage
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -76,8 +78,9 @@ def services(request):
     return render(request, "services.html")
 
 def adoption_process(request):
+    submitted = False
     if request.method == "POST":
-        AdoptionApplication.objects.create(
+        app = AdoptionApplication.objects.create(
             name=request.POST.get("name"),
             email=request.POST.get("email"),
             phone=request.POST.get("phone"),
@@ -85,18 +88,49 @@ def adoption_process(request):
             pet_name=request.POST.get("pet_name"),
             message=request.POST.get("message"),
         )
-        return redirect("adoption_process") 
+        send_mail(
+            subject=f"New Adoption Application from {app.name}",
+            message=(
+                f"Name: {app.name}\n"
+                f"Email: {app.email}\n"
+                f"Phone: {app.phone}\n"
+                f"Address: {app.address}\n"
+                f"Pet: {app.pet_name}\n"
+                f"Message: {app.message}\n\n"
+                f"Login to admin panel to respond: {request.build_absolute_uri('/admin/')}"
+            ),
+            from_email=settings.EMAIL_HOST_USER,
+            recipient_list=[settings.ADMIN_EMAIL],
+            fail_silently=True,
+        )
+        submitted = True
 
     pet_name = request.GET.get("pet", "")
-    return render(request, "adoption_process.html", {"preset_pet": pet_name})
+    return render(request, "adoption_process.html", {
+        "preset_pet": pet_name,
+        "submitted": submitted,
+    })
 
 def contact(request):
     if request.method == "POST":
-        ContactMessage.objects.create(
+        msg = ContactMessage.objects.create(
             name=request.POST.get("name"),
             email=request.POST.get("email"),
             subject=request.POST.get("subject"),
             message=request.POST.get("message"),
+        )
+        send_mail(
+            subject=f"New Contact Message from {msg.name}: {msg.subject}",
+            message=(
+                f"Name: {msg.name}\n"
+                f"Email: {msg.email}\n"
+                f"Subject: {msg.subject}\n"
+                f"Message: {msg.message}\n\n"
+                f"Login to admin panel to respond: {request.build_absolute_uri('/admin/')}"
+            ),
+            from_email=settings.EMAIL_HOST_USER,
+            recipient_list=[settings.ADMIN_EMAIL],
+            fail_silently=True,
         )
         return redirect("contact")
 
