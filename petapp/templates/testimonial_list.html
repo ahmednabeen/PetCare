@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Testimonials | PetCare{% endblock %}
+{% block meta_description %}Hear from our happy adopters about their experience with PetCare.{% endblock %}
+
+{% block content %}
+<section class="testimonials-section">
+    <div class="testimonials-container">
+        <h1>What Our Adopters Say</h1>
+        <p class="testimonials-intro">Real stories from real families who found their perfect pet</p>
+
+        <div class="testimonials-grid">
+            {% for testimonial in testimonials %}
+            <div class="testimonial-card">
+                {% if testimonial.image %}
+                <img src="{{ testimonial.image.url }}" alt="{{ testimonial.name }}" loading="lazy" class="testimonial-img">
+                {% endif %}
+                <div class="testimonial-content">
+                    <p>"{{ testimonial.content }}"</p>
+                    <div class="testimonial-author">
+                        <strong>{{ testimonial.name }}</strong>
+                        {% if testimonial.pet_name %}<span>adopted {{ testimonial.pet_name }}</span>{% endif %}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p>No testimonials yet. Be the first to share your story!</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

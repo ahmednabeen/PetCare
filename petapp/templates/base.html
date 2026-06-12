@@ -6,41 +6,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="{% block meta_description %}PetCare - Find your perfect pet companion. Adopt loving pets and give them a forever home.{% endblock %}">
     <meta name="keywords" content="pet adoption, adopt a pet, cats, dogs, birds, petcare">
-    
+
     <meta property="og:title" content="{% block og_title %}PetCare - Pet Adoption{% endblock %}">
     <meta property="og:description" content="{% block og_description %}Find your perfect pet companion. Adopt loving pets and give them a forever home.{% endblock %}">
     <meta property="og:type" content="website">
     <meta property="og:image" content="{% block og_image %}{% static 'logo.png' %}{% endblock %}">
-    
+
     <link rel="canonical" href="{% block canonical %}{{ request.build_absolute_uri }}{% endblock %}">
     <link rel="icon" type="image/png" href="{% static 'logo.png' %}">
-    
+
     <title>{% block title %}PetCare{% endblock %}</title>
-    
+
     <link rel="stylesheet" href="{% static 'css/style.css' %}?v={{ static_version }}">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "PetCare",
+        "url": "{{ request.build_absolute_uri }}",
+        "logo": "{% static 'logo.png' %}",
+        "description": "Pet adoption platform connecting loving pets with forever homes.",
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "{{ site_settings.contact_phone|default:'+880 1234 567890' }}",
+            "email": "{{ site_settings.contact_email|default:'support@petcare.com' }}",
+            "contactType": "customer service"
+        }
+    }
+    </script>
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
     <header>
-        <a href="{% url 'home' %}" class="logo-title">
+        <a href="{% url 'home' %}" class="logo-title" aria-label="PetCare Home">
             <img src="{% static 'logo.png' %}" alt="PetCare Logo" class="site-logo">
             <h1>PetCare</h1>
         </a>
 
-        <button class="hamburger" aria-label="Toggle menu">
+        <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
             <span></span>
             <span></span>
             <span></span>
         </button>
-        <nav id="main-nav">
+        <nav id="main-nav" aria-label="Main navigation">
             <div class="nav-dropdown">
-                <a href="#" class="dropbtn">Category</a>
-                <div class="dropdown-content">
+                <a href="#" class="dropbtn" aria-haspopup="true" aria-expanded="false">Category</a>
+                <div class="dropdown-content" role="menu">
                     {% for cat in nav_categories %}
-                    <div class="dropdown-sub">
-                        <a href="{% url 'pet_list' cat.name %}" class="drop-sub-trigger">{{ cat.name }}</a>
-                        <div class="dropdown-submenu">
+                    <div class="dropdown-sub" role="none">
+                        <a href="{% url 'pet_list' cat.name %}" class="drop-sub-trigger" role="menuitem" aria-haspopup="true">{{ cat.name }}</a>
+                        <div class="dropdown-submenu" role="menu">
                             {% for breed in cat.breeds %}
-                            <a href="{% url 'pet_list' cat.name %}?species={{ breed }}">{{ breed }}</a>
+                            <a href="{% url 'pet_list' cat.name %}?species={{ breed }}" role="menuitem">{{ breed }}</a>
                             {% endfor %}
                         </div>
                     </div>
@@ -50,7 +69,14 @@
             <a href="{% url 'about' %}">About Us</a>
             <a href="{% url 'contact' %}">Contact Us</a>
             <a href="{% url 'services' %}">Services</a>
+            <a href="{% url 'blog_list' %}">Blog</a>
         </nav>
+
+        <a href="{% url 'search' %}" class="search-icon-link" aria-label="Search pets">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+                <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+            </svg>
+        </a>
     </header>
 
     <section class="hero">
@@ -59,14 +85,22 @@
             <p>{{ site_settings.hero_subtitle|default:"Adopt loving pets and give them a forever home" }}</p>
         </div>
         <div class="hero-img">
-            <img src="/media/images/combined.jpg" alt="Pet">
+            <img src="/media/images/combined.jpg" alt="Happy pets looking for a home" loading="lazy">
         </div>
     </section>
 
-    <main>
+    <main id="main-content">
+        {% if messages %}
+        <div class="messages-container">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}" role="alert">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
         {% block content %}{% endblock %}
     </main>
-
 
     <footer>
         <div class="footer-content">
@@ -80,6 +114,7 @@
                 <a href="{% url 'services' %}">Services</a>
                 <a href="{% url 'contact' %}">Contact</a>
                 <a href="{% url 'adoption_process' %}">Adoption</a>
+                <a href="{% url 'blog_list' %}">Blog</a>
             </div>
             <div class="footer-col">
                 <h3>Contact</h3>
@@ -90,15 +125,15 @@
             <div class="footer-col">
                 <h3>Follow Us</h3>
                 <div class="footer-social">
-                    <a href="#" class="social-facebook">
+                    <a href="#" class="social-facebook" aria-label="Facebook">
                         <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                         <span class="social-name">Facebook</span>
                     </a>
-                    <a href="#" class="social-twitter">
+                    <a href="#" class="social-twitter" aria-label="Twitter">
                         <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                         <span class="social-name">Twitter</span>
                     </a>
-                    <a href="#" class="social-instagram">
+                    <a href="#" class="social-instagram" aria-label="Instagram">
                         <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                         <span class="social-name">Instagram</span>
                     </a>
@@ -110,6 +145,12 @@
         </div>
     </footer>
 
+    <button id="back-to-top" class="back-to-top" aria-label="Back to top">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+            <path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"/>
+        </svg>
+    </button>
+
     {% block javascript %}{% endblock %}
 
 <script>
@@ -119,14 +160,16 @@
     if (hamburger) {
         hamburger.addEventListener('click', function(e) {
             e.stopPropagation();
-            nav.classList.toggle('nav-open');
+            var isOpen = nav.classList.toggle('nav-open');
             hamburger.classList.toggle('active');
+            hamburger.setAttribute('aria-expanded', isOpen);
         });
     }
     document.addEventListener('click', function(e) {
         if (!nav.contains(e.target) && !hamburger.contains(e.target)) {
             nav.classList.remove('nav-open');
             hamburger.classList.remove('active');
+            hamburger.setAttribute('aria-expanded', 'false');
         }
     });
     var dropbtns = document.querySelectorAll('.dropbtn, .drop-sub-trigger');
@@ -136,11 +179,27 @@
                 e.preventDefault();
                 var parent = this.closest('.nav-dropdown') || this.closest('.dropdown-sub');
                 if (parent) {
-                    parent.classList.toggle('touch-open');
+                    var isOpen = parent.classList.toggle('touch-open');
+                    if (this.hasAttribute('aria-expanded')) {
+                        this.setAttribute('aria-expanded', isOpen);
+                    }
                 }
             }
         });
     });
+    var backToTop = document.getElementById('back-to-top');
+    if (backToTop) {
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+        backToTop.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
 })();
 </script>
 

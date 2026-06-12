@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ post.title }} | PetCare Blog{% endblock %}
+{% block meta_description %}{{ post.excerpt|truncatewords:30 }}{% endblock %}
+{% block og_title %}{{ post.title }}{% endblock %}
+{% block og_description %}{{ post.excerpt|truncatewords:30 }}{% endblock %}
+{% block og_image %}{% if post.image %}{{ request.scheme }}://{{ request.get_host }}{{ post.image.url }}{% else %}{% static 'logo.png' %}{% endif %}{% endblock %}
+
+{% block content %}
+<article class="blog-detail">
+    <div class="blog-detail-container">
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+            <a href="{% url 'home' %}">Home</a>
+            <span class="sep">/</span>
+            <a href="{% url 'blog_list' %}">Blog</a>
+            <span class="sep">/</span>
+            <span aria-current="page">{{ post.title }}</span>
+        </nav>
+
+        <h1>{{ post.title }}</h1>
+        <div class="blog-meta">
+            <span>{{ post.created_at|date:"F d, Y" }}</span>
+            {% if post.author %}<span> | {{ post.author }}</span>{% endif %}
+        </div>
+
+        {% if post.image %}
+        <div class="blog-detail-image">
+            <img src="{{ post.image.url }}" alt="{{ post.title }}" loading="lazy">
+        </div>
+        {% endif %}
+
+        <div class="blog-content">
+            {{ post.content|linebreaks }}
+        </div>
+    </div>
+</article>
+
+{% if recent_posts %}
+<section class="related-posts">
+    <div class="blog-container">
+        <h2>Recent Posts</h2>
+        <div class="blog-grid">
+            {% for rp in recent_posts %}
+            <article class="blog-card">
+                {% if rp.image %}
+                <img src="{{ rp.image.url }}" alt="{{ rp.title }}" loading="lazy">
+                {% endif %}
+                <div class="blog-card-content">
+                    <small>{{ rp.created_at|date:"M d, Y" }}</small>
+                    <h3><a href="{% url 'blog_detail' rp.slug %}">{{ rp.title }}</a></h3>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endblock %}

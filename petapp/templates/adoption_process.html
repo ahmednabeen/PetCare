@@ -2,8 +2,14 @@
 {% load static %}
 
 {% block title %}Adoption Process | PetCare{% endblock %}
+{% block meta_description %}Follow our simple adoption process to give a pet a loving forever home.{% endblock %}
 
 {% block content %}
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="{% url 'home' %}">Home</a>
+    <span class="sep">/</span>
+    <span aria-current="page">Adoption</span>
+</nav>
 
 <section class="adoption-section">
     <div class="adoption-header">
@@ -57,37 +63,36 @@
         <h3>Adoption Application Form</h3>
 
         <div class="form-group">
-            <label>Full Name</label>
-            <input type="text" name="name" placeholder="Enter your full name" required>
+            <label for="id_name">Full Name</label>
+            <input type="text" name="name" id="id_name" placeholder="Enter your full name" required>
         </div>
 
         <div class="form-group">
-            <label>Email Address</label>
-            <input type="email" name="email" placeholder="Enter your email" required>
+            <label for="id_email">Email Address</label>
+            <input type="email" name="email" id="id_email" placeholder="Enter your email" required>
         </div>
 
         <div class="form-group">
-            <label>Phone Number</label>
-            <input type="text" name="phone" placeholder="Enter your phone number" required>
+            <label for="id_phone">Phone Number</label>
+            <input type="text" name="phone" id="id_phone" placeholder="Enter your phone number" required>
         </div>
 
         <div class="form-group">
-            <label>Address</label>
-            <textarea name="address" placeholder="Enter your address" required></textarea>
+            <label for="id_address">Address</label>
+            <textarea name="address" id="id_address" placeholder="Enter your address" required></textarea>
         </div>
 
         <div class="form-group">
-            <label>Which pet do you want to adopt?</label>
-            <input type="text" name="pet_name" placeholder="Pet name or ID" value="{{ preset_pet }}">
+            <label for="id_pet_name">Which pet do you want to adopt?</label>
+            <input type="text" name="pet_name" id="id_pet_name" placeholder="Pet name or ID" value="{{ preset_pet }}">
         </div>
 
         <div class="form-group">
-            <label>Why do you want to adopt a pet?</label>
-            <textarea name="message" placeholder="Write a short message"></textarea>
+            <label for="id_message">Why do you want to adopt a pet?</label>
+            <textarea name="message" id="id_message" placeholder="Write a short message"></textarea>
         </div>
 
         <button type="submit" class="adopt-btn">Submit Application</button>
     </form>
 </section>
-
 {% endblock %}

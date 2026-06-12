@@ -2,26 +2,40 @@
 {% load static %}
 
 {% block title %}{{ category.name }} For Adoption{% endblock %}
+{% block meta_description %}Browse our {{ category.name|lower }} looking for a new home. Adopt your perfect pet today.{% endblock %}
 
 {% block content %}
-<div class="container" id="pet-section">
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="{% url 'home' %}">Home</a>
+    <span class="sep">/</span>
+    <span aria-current="page">{{ category.name }}</span>
+</nav>
 
+<div class="container" id="pet-section">
     <div class="container-head">
         <h1>Our {{ category.name }} Collection</h1>
         <br>
         <h3>Browse our lovely {{ category.name|lower }} looking for a new home</h3>
         {% if current_species %}
-            <p style="margin-top:10px;color:#6e7cd6;font-weight:bold;">Showing: {{ current_species }}</p>
+            <p class="current-filter">Showing: {{ current_species }}</p>
         {% endif %}
     </div>
 
-    <!-- Grid for the pet cards -->
+    {% if species_list %}
+    <div class="species-filter">
+        <strong>Filter by species:</strong>
+        <a href="{% url 'pet_list' category.name %}" class="filter-link {% if not current_species %}active{% endif %}">All</a>
+        {% for species in species_list %}
+        <a href="?species={{ species }}" class="filter-link {% if current_species == species %}active{% endif %}">{{ species }}</a>
+        {% endfor %}
+    </div>
+    {% endif %}
+
     <div class="pet-grid">
         {% for pet in page_obj %}
             <div class="pet-card">
-
                 <div class="pet-card-image">
-                    <img src="{{ pet.image.url }}" alt="Photo of {{ pet.name }}">
+                    <img src="{{ pet.image.url }}" alt="Photo of {{ pet.name }}" loading="lazy">
                 </div>
                 <div class="pet-card-content">
                     <h3>{{ pet.name }}</h3>
@@ -32,61 +46,48 @@
                         <li>
                             <strong>Availability:</strong>
                             {% if pet.is_available %}
-                                <span style="color:#28a745;font-weight:bold;">Available</span>
+                                <span class="available-text">Available</span>
                             {% else %}
-                                <span style="color:#dc3545;font-weight:bold;">Adopted</span>
+                                <span class="adopted-text">Adopted</span>
                             {% endif %}
                         </li>
                     </ul>
                     <a href="{% url 'pet_detail' pet_id=pet.id %}" class="btn">Details</a>
                 </div>
-
             </div>
         {% empty %}
             <p>Sorry, there are currently no {{ category.name|lower }} available for adoption.</p>
         {% endfor %}
-    </div> 
-
-
-    <!-- Pagination -->
-    {% if page_obj.has_other_pages %}
-<div class="pagination">
-    <div class="pagination-inner">
-
-        <!-- Previous -->
-        {% if page_obj.has_previous %}
-            <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if current_species %}&species={{ current_species }}{% endif %}#pet-section"><b>Previous</b></a>
-        {% else %}
-            <span class="page-link disabled"><b>Previous</b></span>
-        {% endif %}
-
-        <!-- Page Numbers -->
-        {% for num in page_obj.paginator.page_range %}
-            {% if num == page_obj.number %}
-                <span class="page-number active">{{ num }}</span>
-
-            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-                <a class="page-number" href="?page={{ num }}{% if current_species %}&species={{ current_species }}{% endif %}#pet-section">{{ num }}</a>
-
-            {% elif num == 1 or num == page_obj.paginator.num_pages %}
-                <a class="page-number" href="?page={{ num }}{% if current_species %}&species={{ current_species }}{% endif %}#pet-section">{{ num }}</a>
-
-            {% elif num == page_obj.number|add:'-3' or num == page_obj.number|add:'3' %}
-                <span class="dots">…</span>
-            {% endif %}
-        {% endfor %}
-
-        <!-- Next -->
-        {% if page_obj.has_next %}
-            <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if current_species %}&species={{ current_species }}{% endif %}#pet-section"><b>Next</b></a>
-        {% else %}
-            <span class="page-link disabled"><b>Next</b></span>
-        {% endif %}
-
     </div>
-</div>
-{% endif %}
 
+    {% if page_obj.has_other_pages %}
+    <div class="pagination">
+        <div class="pagination-inner">
+            {% if page_obj.has_previous %}
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if current_species %}&species={{ current_species }}{% endif %}#pet-section"><b>Previous</b></a>
+            {% else %}
+                <span class="page-link disabled"><b>Previous</b></span>
+            {% endif %}
 
+            {% for num in page_obj.paginator.page_range %}
+                {% if num == page_obj.number %}
+                    <span class="page-number active">{{ num }}</span>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <a class="page-number" href="?page={{ num }}{% if current_species %}&species={{ current_species }}{% endif %}#pet-section">{{ num }}</a>
+                {% elif num == 1 or num == page_obj.paginator.num_pages %}
+                    <a class="page-number" href="?page={{ num }}{% if current_species %}&species={{ current_species }}{% endif %}#pet-section">{{ num }}</a>
+                {% elif num == page_obj.number|add:'-3' or num == page_obj.number|add:'3' %}
+                    <span class="dots">…</span>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if current_species %}&species={{ current_species }}{% endif %}#pet-section"><b>Next</b></a>
+            {% else %}
+                <span class="page-link disabled"><b>Next</b></span>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}

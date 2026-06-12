@@ -2,14 +2,13 @@
 {% load static %}
 
 {% block content %}
-    <!-- Categories -->
     <section class="categories">
         <h1 class="categories-h1">Pet Categories</h1>
-        
+
         <div class="category-grid" id="category-grid">
             {% for category in categories %}
             <div class="category-card">
-                <img src="{{ category.image.url }}" alt="Image of {{ category.name }}">
+                <img src="{{ category.image.url }}" alt="Image of {{ category.name }}" loading="lazy">
                 <div class="category-card-content">
                     <h3>{{ category.name }}</h3>
                     <p>{{ category.description|truncatewords:20 }}</p>
@@ -58,6 +57,31 @@
         {% endif %}
     </section>
 
+    {% if home_testimonials %}
+    <section class="testimonials-section">
+        <div class="testimonials-container">
+            <h2>What Our Adopters Say</h2>
+            <div class="testimonials-grid home-testimonials">
+                {% for testimonial in home_testimonials %}
+                <div class="testimonial-card">
+                    {% if testimonial.image %}
+                    <img src="{{ testimonial.image.url }}" alt="{{ testimonial.name }}" loading="lazy" class="testimonial-img">
+                    {% endif %}
+                    <div class="testimonial-content">
+                        <p>"{{ testimonial.content }}"</p>
+                        <div class="testimonial-author">
+                            <strong>{{ testimonial.name }}</strong>
+                            {% if testimonial.pet_name %}<span>adopted {{ testimonial.pet_name }}</span>{% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <a href="{% url 'testimonial_list' %}" class="btn">View All Testimonials</a>
+        </div>
+    </section>
+    {% endif %}
+
     {% if all_working_steps %}
     <section class="steps">
         <h2>Working Procedure</h2>
@@ -75,5 +99,28 @@
         <a href="{% url 'adoption_process' %}" class="adoption-btn">Click Here</a>
     </section>
 
-{% endblock %}
+    {% if home_blog_posts %}
+    <section class="blog-section">
+        <div class="blog-container">
+            <h2>Latest from Our Blog</h2>
+            <div class="blog-grid home-blog-grid">
+                {% for post in home_blog_posts %}
+                <article class="blog-card">
+                    {% if post.image %}
+                    <img src="{{ post.image.url }}" alt="{{ post.title }}" loading="lazy">
+                    {% endif %}
+                    <div class="blog-card-content">
+                        <h3><a href="{% url 'blog_detail' post.slug %}">{{ post.title }}</a></h3>
+                        <p>{{ post.excerpt|default:post.content|truncatewords:55 }}</p>
+                        <small>{{ post.created_at|date:"M d, Y" }}</small>
+                        <a href="{% url 'blog_detail' post.slug %}" class="btn"><b>Read More</b></a>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+            <a href="{% url 'blog_list' %}" class="btn">View All Posts</a>
+        </div>
+    </section>
+    {% endif %}
 
+{% endblock %}

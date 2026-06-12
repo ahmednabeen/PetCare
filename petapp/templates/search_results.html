@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Search Results | PetCare{% endblock %}
+
+{% block content %}
+<section class="search-section">
+    <div class="search-container">
+        <h1>Search Results</h1>
+
+        <form method="get" action="{% url 'search' %}" class="search-form" role="search">
+            <div class="search-input-group">
+                <input type="search" name="q" value="{{ query }}" placeholder="Search pets by name, species, or origin..." aria-label="Search pets">
+                <button type="submit" class="btn">Search</button>
+            </div>
+        </form>
+
+        {% if query %}
+            <p class="search-summary">
+                {% if results %}
+                    Found {{ results.count }} result{{ results.count|pluralize }} for "{{ query }}"
+                {% else %}
+                    No results found for "{{ query }}"
+                {% endif %}
+            </p>
+        {% endif %}
+
+        {% if results %}
+        <div class="pet-grid">
+            {% for pet in results %}
+            <div class="pet-card">
+                <div class="pet-card-image">
+                    <img src="{{ pet.image.url }}" alt="{{ pet.name }}" loading="lazy">
+                </div>
+                <div class="pet-card-content">
+                    <h3>{{ pet.name }}</h3>
+                    <p class="pet-id-line">ID: {{ pet.pet_id }}</p>
+                    <ul>
+                        <li><strong>Species:</strong> {{ pet.species }}</li>
+                        <li><strong>Category:</strong> {{ pet.category.name }}</li>
+                        <li>
+                            <strong>Availability:</strong>
+                            {% if pet.is_available %}
+                            <span class="available-text">Available</span>
+                            {% else %}
+                            <span class="adopted-text">Adopted</span>
+                            {% endif %}
+                        </li>
+                    </ul>
+                    <a href="{% url 'pet_detail' pet_id=pet.id %}" class="btn">Details</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
