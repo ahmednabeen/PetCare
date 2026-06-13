@@ -7,8 +7,8 @@
 <section class="about-section">
 
     <div class="about-container">
-        <h1>About PetCare</h1>
-        <p class="about-intro">{{ site_settings.about_intro|default:"PetCare is a trusted pet adoption platform." }}</p>
+        <h1>{{ site_settings.about_heading|default:'About PetCare' }}</h1>
+        <p class="about-intro">{{ site_settings.about_intro|default:'PetCare is a trusted pet adoption platform.' }}</p>
 
         {% if all_about_features %}
         <div class="about-grid">

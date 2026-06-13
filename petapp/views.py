@@ -89,7 +89,11 @@ def services(request):
     return render(request, "services.html")
 
 def adoption_process(request):
-    form = AdoptionForm(request.POST or None)
+    initial = {}
+    pet_name = request.GET.get("pet", "")
+    if pet_name:
+        initial["pet_name"] = pet_name
+    form = AdoptionForm(request.POST or None, initial=initial or None)
     submitted = False
 
     if request.method == "POST" and form.is_valid():
@@ -138,9 +142,7 @@ def adoption_process(request):
             pass
         submitted = True
 
-    pet_name = request.GET.get("pet", "")
     return render(request, "adoption_process.html", {
-        "preset_pet": pet_name,
         "submitted": submitted,
         "form": form,
     })

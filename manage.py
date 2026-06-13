@@ -2,6 +2,7 @@
 import os
 import sys
 
+os.environ['PYTHONDONTWRITEBYTECODE'] = '1'
 
 def main():
     """Run administrative tasks."""

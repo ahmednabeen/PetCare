@@ -7,8 +7,8 @@
 {% block content %}
 <section class="blog-section">
     <div class="blog-container">
-        <h1>PetCare Blog</h1>
-        <p class="blog-intro">Tips, stories, and guides for pet lovers</p>
+        <h1>{{ site_settings.blog_heading|default:'PetCare Blog' }}</h1>
+        <p class="blog-intro">{{ site_settings.blog_tagline|default:'Tips, stories, and guides for pet lovers' }}</p>
 
         <div class="blog-grid">
             {% for post in page_obj %}
@@ -18,7 +18,7 @@
                 {% endif %}
                 <div class="blog-card-content">
                     <h3><a href="{% url 'blog_detail' post.slug %}">{{ post.title }}</a></h3>
-                    <p>{{ post.excerpt|default:post.content|truncatewords:55 }}</p>
+                    <p>{% if post.excerpt %}{{ post.excerpt|truncatewords:55 }}{% else %}{{ post.content|truncatewords:55 }}{% endif %}</p>
                     <small>{{ post.created_at|date:"M d, Y" }}</small>
                     <a href="{% url 'blog_detail' post.slug %}" class="btn"><b>Read More</b></a>
                 </div>
@@ -32,7 +32,7 @@
         <div class="pagination">
             <div class="pagination-inner">
                 {% if page_obj.has_previous %}
-                <a class="page-link" href="?page={{ page_obj.previous_page_number }}"><b>Previous</b></a>
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}"><b>{{ site_settings.pagination_prev_text|default:'Previous' }}</b></a>
                 {% endif %}
                 {% for num in page_obj.paginator.page_range %}
                     {% if num == page_obj.number %}
@@ -44,7 +44,7 @@
                     {% endif %}
                 {% endfor %}
                 {% if page_obj.has_next %}
-                <a class="page-link" href="?page={{ page_obj.next_page_number }}"><b>Next</b></a>
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}"><b>{{ site_settings.pagination_next_text|default:'Next' }}</b></a>
                 {% endif %}
             </div>
         </div>

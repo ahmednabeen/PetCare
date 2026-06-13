@@ -3,7 +3,7 @@
 
 {% block content %}
     <section class="categories">
-        <h1 class="categories-h1">Pet Categories</h1>
+        <h1 class="categories-h1">{{ site_settings.home_categories_heading|default:'Pet Categories' }}</h1>
 
         <div class="category-grid" id="category-grid">
             {% for category in categories %}
@@ -24,7 +24,7 @@
         <div class="pagination">
             <div class="pagination-inner">
                 {% if has_previous %}
-                <a class="page-link" href="?page={{ prev_page }}"><b>Previous</b></a>
+                <a class="page-link" href="?page={{ prev_page }}"><b>{{ site_settings.pagination_prev_text|default:'Previous' }}</b></a>
                 {% endif %}
 
                 {% if page_number > 3 %}
@@ -50,7 +50,7 @@
                 {% endif %}
 
                 {% if has_next %}
-                <a class="page-link" href="?page={{ next_page }}"><b>Next</b></a>
+                <a class="page-link" href="?page={{ next_page }}"><b>{{ site_settings.pagination_next_text|default:'Next' }}</b></a>
                 {% endif %}
             </div>
         </div>
@@ -60,7 +60,7 @@
     {% if home_testimonials %}
     <section class="testimonials-section">
         <div class="testimonials-container">
-            <h2>What Our Adopters Say</h2>
+            <h2>{{ site_settings.home_testimonials_heading|default:'What Our Adopters Say' }}</h2>
             <div class="testimonials-grid home-testimonials">
                 {% for testimonial in home_testimonials %}
                 <div class="testimonial-card">
@@ -77,14 +77,14 @@
                 </div>
                 {% endfor %}
             </div>
-            <a href="{% url 'testimonial_list' %}" class="btn">View All Testimonials</a>
+            <a href="{% url 'testimonial_list' %}" class="btn">{{ site_settings.home_testimonials_btn_text|default:'View All Testimonials' }}</a>
         </div>
     </section>
     {% endif %}
 
     {% if all_working_steps %}
     <section class="steps">
-        <h2>Working Procedure</h2>
+        <h2>{{ site_settings.home_working_steps_heading|default:'Working Procedure' }}</h2>
         <div class="step-box">
             {% for step in all_working_steps %}
             <div class="step">{{ step.number }} <br>{{ step.title }}</div>
@@ -96,13 +96,13 @@
     <section class="adoption-process">
         <h1>{{ site_settings.adoption_process_heading|default:"Adoption Process" }}</h1>
         <h2>{{ site_settings.adoption_process_subheading|default:"For Adopt Your Perfect One" }}</h2>
-        <a href="{% url 'adoption_process' %}" class="adoption-btn">Click Here</a>
+        <a href="{% url 'adoption_process' %}" class="adoption-btn">{{ site_settings.home_adoption_btn_text|default:'Click Here' }}</a>
     </section>
 
     {% if home_blog_posts %}
     <section class="blog-section">
         <div class="blog-container">
-            <h2>Latest from Our Blog</h2>
+            <h2>{{ site_settings.home_blog_heading|default:'Latest from Our Blog' }}</h2>
             <div class="blog-grid home-blog-grid">
                 {% for post in home_blog_posts %}
                 <article class="blog-card">
@@ -111,14 +111,14 @@
                     {% endif %}
                     <div class="blog-card-content">
                         <h3><a href="{% url 'blog_detail' post.slug %}">{{ post.title }}</a></h3>
-                        <p>{{ post.excerpt|default:post.content|truncatewords:55 }}</p>
+                        <p>{% if post.excerpt %}{{ post.excerpt|truncatewords:55 }}{% else %}{{ post.content|truncatewords:55 }}{% endif %}</p>
                         <small>{{ post.created_at|date:"M d, Y" }}</small>
-                        <a href="{% url 'blog_detail' post.slug %}" class="btn"><b>Read More</b></a>
+                        <a href="{% url 'blog_detail' post.slug %}" class="btn"><b>{{ site_settings.read_more_text|default:'Read More' }}</b></a>
                     </div>
                 </article>
                 {% endfor %}
             </div>
-            <a href="{% url 'blog_list' %}" class="btn">View All Posts</a>
+            <a href="{% url 'blog_list' %}" class="btn">{{ site_settings.home_blog_btn_text|default:'View All Posts' }}</a>
         </div>
     </section>
     {% endif %}

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.core.mail import send_mail
 from django.conf import settings
-from .models import Category, Pet, PetImage, AdoptionApplication, ContactMessage, SiteSetting, Service, WorkingStep, AboutFeature, WhyChooseUsItem, BlogPost, Testimonial
+from .models import Category, Pet, PetImage, AdoptionApplication, ContactMessage, SiteSetting, Service, WorkingStep, AboutFeature, WhyChooseUsItem, BlogPost, Testimonial, NavigationLink, SocialLink
 
 class PetImageInline(admin.TabularInline):
     model = PetImage
@@ -55,11 +55,39 @@ class AdoptionApplicationAdmin(admin.ModelAdmin):
             obj.replied = True
         super().save_model(request, obj, form, change)
 
-admin.site.register(SiteSetting)
-admin.site.register(Service)
-admin.site.register(WorkingStep)
-admin.site.register(AboutFeature)
-admin.site.register(WhyChooseUsItem)
+@admin.register(SiteSetting)
+class SiteSettingAdmin(admin.ModelAdmin):
+    list_display = ('key', 'value')
+    search_fields = ('key',)
+    list_per_page = 50
+
+@admin.register(Service)
+class ServiceAdmin(admin.ModelAdmin):
+    list_display = ('title', 'order')
+    search_fields = ('title',)
+
+@admin.register(WorkingStep)
+class WorkingStepAdmin(admin.ModelAdmin):
+    list_display = ('number', 'title')
+
+@admin.register(AboutFeature)
+class AboutFeatureAdmin(admin.ModelAdmin):
+    list_display = ('title', 'order')
+
+@admin.register(WhyChooseUsItem)
+class WhyChooseUsItemAdmin(admin.ModelAdmin):
+    list_display = ('text', 'order')
+
+@admin.register(NavigationLink)
+class NavigationLinkAdmin(admin.ModelAdmin):
+    list_display = ('title', 'placement', 'parent', 'order', 'is_active')
+    list_filter = ('placement', 'is_active')
+    list_editable = ('order', 'is_active')
+
+@admin.register(SocialLink)
+class SocialLinkAdmin(admin.ModelAdmin):
+    list_display = ('platform', 'url', 'order', 'is_active')
+    list_editable = ('order', 'is_active')
 
 @admin.register(BlogPost)
 class BlogPostAdmin(admin.ModelAdmin):

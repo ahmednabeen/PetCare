@@ -1,16 +1,23 @@
-{% extends "base.html" %}
 {% load static %}
-
-{% block title %}Server Error | PetCare{% endblock %}
-{% block meta_description %}Something went wrong on our end.{% endblock %}
-
-{% block content %}
-<section class="error-section">
-    <div class="error-container">
-        <h1>500</h1>
-        <h2>Server Error</h2>
-        <p>Something went wrong on our end. Please try again later.</p>
-        <a href="{% url 'home' %}" class="btn">Back to Home</a>
-    </div>
-</section>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if site_settings.error_500_heading %}{{ site_settings.error_500_heading }} | {% endif %}PetCare</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'logo.png' %}">
+</head>
+<body>
+    <main>
+        <section class="error-section">
+            <div class="error-container">
+                <h1>500</h1>
+                <h2>{{ site_settings.error_500_heading|default:'Server Error' }}</h2>
+                <p>{{ site_settings.error_500_text|default:'Something went wrong on our end. Please try again later.' }}</p>
+                <a href="{% url 'home' %}" class="btn">{{ site_settings.error_back_btn|default:'Back to Home' }}</a>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

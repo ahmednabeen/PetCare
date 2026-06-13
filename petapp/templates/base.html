@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="{% block meta_description %}PetCare - Find your perfect pet companion. Adopt loving pets and give them a forever home.{% endblock %}">
+    <meta name="description" content="{% block meta_description %}{{ site_settings.hero_subtitle|default:'PetCare - Find your perfect pet companion. Adopt loving pets and give them a forever home.' }}{% endblock %}">
     <meta name="keywords" content="pet adoption, adopt a pet, cats, dogs, birds, petcare">
 
-    <meta property="og:title" content="{% block og_title %}PetCare - Pet Adoption{% endblock %}">
-    <meta property="og:description" content="{% block og_description %}Find your perfect pet companion. Adopt loving pets and give them a forever home.{% endblock %}">
+    <meta property="og:title" content="{% block og_title %}{{ site_settings.hero_title|default:'PetCare - Pet Adoption' }}{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}{{ site_settings.hero_subtitle|default:'Find your perfect pet companion. Adopt loving pets and give them a forever home.' }}{% endblock %}">
     <meta property="og:type" content="website">
     <meta property="og:image" content="{% block og_image %}{% static 'logo.png' %}{% endblock %}">
 
@@ -26,7 +26,7 @@
         "name": "PetCare",
         "url": "{{ request.build_absolute_uri }}",
         "logo": "{% static 'logo.png' %}",
-        "description": "Pet adoption platform connecting loving pets with forever homes.",
+        "description": "{{ site_settings.about_intro|default:'Pet adoption platform connecting loving pets with forever homes.' }}",
         "contactPoint": {
             "@type": "ContactPoint",
             "telephone": "{{ site_settings.contact_phone|default:'+880 1234 567890' }}",
@@ -37,7 +37,7 @@
     </script>
 </head>
 <body>
-    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <a href="#main-content" class="skip-link">{{ site_settings.skip_to_main|default:'Skip to main content' }}</a>
 
     <header>
         <a href="{% url 'home' %}" class="logo-title" aria-label="PetCare Home">
@@ -45,14 +45,15 @@
             <h1>PetCare</h1>
         </a>
 
-        <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
+        <button class="hamburger" aria-label="{{ site_settings.toggle_menu|default:'Toggle menu' }}" aria-expanded="false" aria-controls="main-nav">
             <span></span>
             <span></span>
             <span></span>
         </button>
         <nav id="main-nav" aria-label="Main navigation">
+            {% if nav_categories %}
             <div class="nav-dropdown">
-                <a href="#" class="dropbtn" aria-haspopup="true" aria-expanded="false">Category</a>
+                <a href="#" class="dropbtn" aria-haspopup="true" aria-expanded="false">{{ site_settings.nav_categories_text|default:'Category' }}</a>
                 <div class="dropdown-content" role="menu">
                     {% for cat in nav_categories %}
                     <div class="dropdown-sub" role="none">
@@ -66,10 +67,10 @@
                     {% endfor %}
                 </div>
             </div>
-            <a href="{% url 'about' %}">About Us</a>
-            <a href="{% url 'contact' %}">Contact Us</a>
-            <a href="{% url 'services' %}">Services</a>
-            <a href="{% url 'blog_list' %}">Blog</a>
+            {% endif %}
+            {% for link in nav_links %}
+            <a href="{% if link.url_external %}{{ link.url_external }}{% else %}{% url link.url_name %}{% endif %}">{{ link.title }}</a>
+            {% endfor %}
         </nav>
 
         <a href="{% url 'search' %}" class="search-icon-link" aria-label="Search pets">
@@ -81,12 +82,14 @@
 
     <section class="hero">
         <div class="hero-text">
-            <h2>{{ site_settings.hero_title|default:"Find Your Perfect Pet Companion" }}</h2>
-            <p>{{ site_settings.hero_subtitle|default:"Adopt loving pets and give them a forever home" }}</p>
+            <h2>{{ site_settings.hero_title|default:'Find Your Perfect Pet Companion' }}</h2>
+            <p>{{ site_settings.hero_subtitle|default:'Adopt loving pets and give them a forever home' }}</p>
         </div>
+        {% if site_settings.hero_image_url %}
         <div class="hero-img">
-            <img src="/media/images/combined.jpg" alt="Happy pets looking for a home" loading="lazy">
+            <img src="{{ site_settings.hero_image_url }}" alt="Happy pets looking for a home" loading="lazy">
         </div>
+        {% endif %}
     </section>
 
     <main id="main-content">
@@ -106,46 +109,38 @@
         <div class="footer-content">
             <div class="footer-col">
                 <h3>PetCare</h3>
-                <p>{{ site_settings.footer_about|default:"Your trusted platform for pet adoption. Giving pets a loving forever home." }}</p>
+                <p>{{ site_settings.footer_about|default:'Your trusted platform for pet adoption. Giving pets a loving forever home.' }}</p>
             </div>
             <div class="footer-col">
-                <h3>Quick Links</h3>
-                <a href="{% url 'about' %}">About Us</a>
-                <a href="{% url 'services' %}">Services</a>
-                <a href="{% url 'contact' %}">Contact</a>
-                <a href="{% url 'adoption_process' %}">Adoption</a>
-                <a href="{% url 'blog_list' %}">Blog</a>
+                <h3>{{ site_settings.footer_heading_quick_links|default:'Quick Links' }}</h3>
+                {% for link in footer_links %}
+                <a href="{% if link.url_external %}{{ link.url_external }}{% else %}{% url link.url_name %}{% endif %}">{{ link.title }}</a>
+                {% endfor %}
             </div>
             <div class="footer-col">
-                <h3>Contact</h3>
-                <p>{{ site_settings.contact_address|default:"Chattogram, Bangladesh" }}</p>
-                <p>{{ site_settings.contact_email|default:"support@petcare.com" }}</p>
-                <p>{{ site_settings.contact_phone|default:"+880 1234 567890" }}</p>
+                <h3>{{ site_settings.footer_heading_contact|default:'Contact' }}</h3>
+                <p>{{ site_settings.contact_address|default:'Dhaka, Bangladesh' }}</p>
+                <p>{{ site_settings.contact_email|default:'support@petcare.com' }}</p>
+                <p>{{ site_settings.contact_phone|default:'+880 1234 567890' }}</p>
             </div>
             <div class="footer-col">
-                <h3>Follow Us</h3>
+                <h3>{{ site_settings.footer_heading_follow_us|default:'Follow Us' }}</h3>
                 <div class="footer-social">
-                    <a href="#" class="social-facebook" aria-label="Facebook">
-                        <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                        <span class="social-name">Facebook</span>
+                    {% for link in social_links %}
+                    <a href="{{ link.url }}" class="social-{{ link.platform|lower }}" aria-label="{{ link.platform }}">
+                        {% if link.icon_svg %}{{ link.icon_svg|safe }}{% endif %}
+                        <span class="social-name">{{ link.platform }}</span>
                     </a>
-                    <a href="#" class="social-twitter" aria-label="Twitter">
-                        <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                        <span class="social-name">Twitter</span>
-                    </a>
-                    <a href="#" class="social-instagram" aria-label="Instagram">
-                        <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                        <span class="social-name">Instagram</span>
-                    </a>
+                    {% endfor %}
                 </div>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>{{ site_settings.footer_text|default:"© 2026 PetCare. All rights reserved." }}</p>
+            <p>{{ site_settings.footer_text|default:'© 2026 PetCare. All rights reserved.' }}</p>
         </div>
     </footer>
 
-    <button id="back-to-top" class="back-to-top" aria-label="Back to top">
+    <button id="back-to-top" class="back-to-top" aria-label="{{ site_settings.back_to_top|default:'Back to top' }}">
         <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
             <path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"/>
         </svg>

@@ -1,6 +1,6 @@
 import time
 from django.core.cache import cache
-from .models import SiteSetting, Service, WorkingStep, AboutFeature, WhyChooseUsItem, Category, Pet, BlogPost, Testimonial
+from .models import SiteSetting, Service, WorkingStep, AboutFeature, WhyChooseUsItem, Category, Pet, BlogPost, Testimonial, NavigationLink, SocialLink
 
 CACHE_TTL = 300
 
@@ -34,6 +34,9 @@ def site_data(request):
             'all_blog_posts': list(BlogPost.objects.filter(published=True)),
             'all_testimonials': list(Testimonial.objects.filter(featured=True)),
             'nav_categories': nav_categories,
+            'nav_links': list(NavigationLink.objects.filter(is_active=True, placement='navbar')),
+            'footer_links': list(NavigationLink.objects.filter(is_active=True, placement='footer')),
+            'social_links': list(SocialLink.objects.filter(is_active=True)),
             'static_version': int(time.time()),
         }
         cache.set('site_data', data, CACHE_TTL)

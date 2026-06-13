@@ -7,8 +7,8 @@
 <section class="services-section">
 
     <div class="services-container">
-        <h1>Our Services</h1>
-        <p class="services-intro">{{ site_settings.services_intro|default:"We offer a range of services for your pets." }}</p>
+        <h1>{{ site_settings.services_heading|default:'Our Services' }}</h1>
+        <p class="services-intro">{{ site_settings.services_intro|default:'We offer a range of services for your pets.' }}</p>
 
         {% if all_services %}
         <div class="services-grid">

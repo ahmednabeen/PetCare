@@ -9,7 +9,7 @@
 
 {% block content %}
 <nav class="breadcrumbs" aria-label="Breadcrumb">
-    <a href="{% url 'home' %}">Home</a>
+    <a href="{% url 'home' %}">{{ site_settings.breadcrumb_home|default:'Home' }}</a>
     <span class="sep">/</span>
     <a href="{% url 'pet_list' pet.category.name %}">{{ pet.category.name }}</a>
     <span class="sep">/</span>
@@ -33,53 +33,53 @@
             <p class="pet-id-line">ID: {{ pet.pet_id }}</p>
 
             {% if pet.is_available %}
-                <p class="availability available">Available for Adoption</p>
+                <p class="availability available">{{ site_settings.available_text|default:'Available for Adoption' }}</p>
             {% else %}
-                <p class="availability unavailable">Already Adopted</p>
+                <p class="availability unavailable">{{ site_settings.adopted_text|default:'Already Adopted' }}</p>
             {% endif %}
 
             <table class="pet-detail-table">
                 <tr>
-                    <td>Category</td>
+                    <td>{{ site_settings.label_category|default:'Category' }}</td>
                     <td>{{ pet.category.name }}</td>
                 </tr>
                 <tr>
-                    <td>Species</td>
+                    <td>{{ site_settings.label_species|default:'Species' }}</td>
                     <td>{{ pet.species }}</td>
                 </tr>
                 <tr>
-                    <td>Average lifespan</td>
+                    <td>{{ site_settings.label_lifespan|default:'Average lifespan' }}</td>
                     <td>{{ pet.average_lifespan }} years</td>
                 </tr>
                 <tr>
-                    <td>Origin</td>
-                    <td>{{ pet.origin|default:"N/A" }}</td>
+                    <td>{{ site_settings.label_origin|default:'Origin' }}</td>
+                    <td>{{ pet.origin|default:'N/A' }}</td>
                 </tr>
                 <tr>
-                    <td>Height</td>
-                    <td>{{ pet.height|default:"N/A" }} cm</td>
+                    <td>{{ site_settings.label_height|default:'Height' }}</td>
+                    <td>{{ pet.height|default:'N/A' }} cm</td>
                 </tr>
                 <tr>
-                    <td>Weight</td>
-                    <td>{{ pet.weight|default:"N/A" }} kg</td>
+                    <td>{{ site_settings.label_weight|default:'Weight' }}</td>
+                    <td>{{ pet.weight|default:'N/A' }} kg</td>
                 </tr>
                 <tr>
-                    <td>Habits</td>
-                    <td>{{ pet.habitual_status|linebreaksbr|default:"N/A" }}</td>
+                    <td>{{ site_settings.label_habits|default:'Habits' }}</td>
+                    <td>{{ pet.habitual_status|linebreaksbr|default:'N/A' }}</td>
                 </tr>
                 <tr>
-                    <td>Diet</td>
-                    <td>{{ pet.foods|linebreaksbr|default:"N/A" }}</td>
+                    <td>{{ site_settings.label_diet|default:'Diet' }}</td>
+                    <td>{{ pet.foods|linebreaksbr|default:'N/A' }}</td>
                 </tr>
                 <tr>
-                    <td>Vaccination</td>
-                    <td>{{ pet.vaccination|linebreaksbr|default:"N/A" }}</td>
+                    <td>{{ site_settings.label_vaccination|default:'Vaccination' }}</td>
+                    <td>{{ pet.vaccination|linebreaksbr|default:'N/A' }}</td>
                 </tr>
             </table>
 
             {% if pet.is_available %}
             <div class="adopt-button-wrapper">
-                <a href="{% url 'adoption_process' %}?pet={{ pet.pet_id|urlencode }}" class="adopt-btn">Adopt {{ pet.name }}</a>
+                <a href="{% url 'adoption_process' %}?pet={{ pet.pet_id|urlencode }}" class="adopt-btn">{{ site_settings.adopt_btn_text|default:'Adopt' }} {{ pet.name }}</a>
             </div>
             {% endif %}
         </div>

@@ -26,30 +26,22 @@
     </div>
     {% endif %}
 
+    {% if all_working_steps %}
     <div class="adoption-steps">
-        <h3>How It Works</h3>
+        <h3>{{ site_settings.adoption_process_how_it_works|default:'How It Works' }}</h3>
         <div class="steps-grid">
+            {% for step in all_working_steps %}
             <div class="step-card">
-                <span class="step-number">1</span>
-                <p>Browse our available pets and find your match</p>
+                <span class="step-number">{{ step.number }}</span>
+                <p>{{ step.title }}</p>
             </div>
-            <div class="step-card">
-                <span class="step-number">2</span>
-                <p>Fill out the adoption application form below</p>
-            </div>
-            <div class="step-card">
-                <span class="step-number">3</span>
-                <p>Our team reviews your application and contacts you</p>
-            </div>
-            <div class="step-card">
-                <span class="step-number">4</span>
-                <p>Meet the pet and complete the adoption</p>
-            </div>
+            {% endfor %}
         </div>
     </div>
+    {% endif %}
 
     <div class="admin-contact">
-        <h3>Contact the Admin</h3>
+        <h3>{{ site_settings.adoption_contact_admin_heading|default:'Contact the Admin' }}</h3>
         <p>Have questions? Reach out to our adoption team:</p>
         <p><strong>Email:</strong> {{ site_settings.admin_email|default:"admin@petcare.com" }}</p>
         <p><strong>Phone:</strong> {{ site_settings.admin_phone|default:"+880 1234 567890" }}</p>
@@ -59,40 +51,52 @@
 
     <form method="post" action="{% url 'adoption_process' %}" class="adoption-form">
         {% csrf_token %}
+        {% if form.errors %}
+        <div class="form-errors">
+            {% for field in form %}
+                {% for error in field.errors %}
+                <p class="error">{{ field.label }}: {{ error }}</p>
+                {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+                <p class="error">{{ error }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
 
-        <h3>Adoption Application Form</h3>
+        <h3>{{ site_settings.adoption_form_heading|default:'Adoption Application Form' }}</h3>
 
         <div class="form-group">
-            <label for="id_name">Full Name</label>
-            <input type="text" name="name" id="id_name" placeholder="Enter your full name" required>
+            <label for="{{ form.name.id_for_label }}">Full Name</label>
+            {{ form.name }}
         </div>
 
         <div class="form-group">
-            <label for="id_email">Email Address</label>
-            <input type="email" name="email" id="id_email" placeholder="Enter your email" required>
+            <label for="{{ form.email.id_for_label }}">Email Address</label>
+            {{ form.email }}
         </div>
 
         <div class="form-group">
-            <label for="id_phone">Phone Number</label>
-            <input type="text" name="phone" id="id_phone" placeholder="Enter your phone number" required>
+            <label for="{{ form.phone.id_for_label }}">Phone Number</label>
+            {{ form.phone }}
         </div>
 
         <div class="form-group">
-            <label for="id_address">Address</label>
-            <textarea name="address" id="id_address" placeholder="Enter your address" required></textarea>
+            <label for="{{ form.address.id_for_label }}">Address</label>
+            {{ form.address }}
         </div>
 
         <div class="form-group">
-            <label for="id_pet_name">Which pet do you want to adopt?</label>
-            <input type="text" name="pet_name" id="id_pet_name" placeholder="Pet name or ID" value="{{ preset_pet }}">
+            <label for="{{ form.pet_name.id_for_label }}">Which pet do you want to adopt?</label>
+            {{ form.pet_name }}
         </div>
 
         <div class="form-group">
-            <label for="id_message">Why do you want to adopt a pet?</label>
-            <textarea name="message" id="id_message" placeholder="Write a short message"></textarea>
+            <label for="{{ form.message.id_for_label }}">Why do you want to adopt a pet?</label>
+            {{ form.message }}
         </div>
 
-        <button type="submit" class="adopt-btn">Submit Application</button>
+        <button type="submit" class="adopt-btn">{{ site_settings.adoption_submit_btn|default:'Submit Application' }}</button>
     </form>
 </section>
 {% endblock %}

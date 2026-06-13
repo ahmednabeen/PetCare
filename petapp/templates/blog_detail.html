@@ -11,9 +11,9 @@
 <article class="blog-detail">
     <div class="blog-detail-container">
         <nav class="breadcrumbs" aria-label="Breadcrumb">
-            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'home' %}">{{ site_settings.breadcrumb_home|default:'Home' }}</a>
             <span class="sep">/</span>
-            <a href="{% url 'blog_list' %}">Blog</a>
+            <a href="{% url 'blog_list' %}">{{ site_settings.blog_heading|default:'Blog' }}</a>
             <span class="sep">/</span>
             <span aria-current="page">{{ post.title }}</span>
         </nav>

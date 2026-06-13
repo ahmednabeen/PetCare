@@ -6,12 +6,12 @@
 {% block content %}
 <section class="search-section">
     <div class="search-container">
-        <h1>Search Results</h1>
+        <h1>{{ site_settings.search_heading|default:'Search Results' }}</h1>
 
         <form method="get" action="{% url 'search' %}" class="search-form" role="search">
             <div class="search-input-group">
                 <input type="search" name="q" value="{{ query }}" placeholder="Search pets by name, species, or origin..." aria-label="Search pets">
-                <button type="submit" class="btn">Search</button>
+                <button type="submit" class="btn">{{ site_settings.search_btn_text|default:'Search' }}</button>
             </div>
         </form>
 

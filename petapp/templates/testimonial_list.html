@@ -7,8 +7,8 @@
 {% block content %}
 <section class="testimonials-section">
     <div class="testimonials-container">
-        <h1>What Our Adopters Say</h1>
-        <p class="testimonials-intro">Real stories from real families who found their perfect pet</p>
+        <h1>{{ site_settings.testimonials_heading|default:'What Our Adopters Say' }}</h1>
+        <p class="testimonials-intro">{{ site_settings.testimonials_tagline|default:'Real stories from real families who found their perfect pet' }}</p>
 
         <div class="testimonials-grid">
             {% for testimonial in testimonials %}

@@ -148,6 +148,41 @@ class AdoptionApplication(models.Model):
     def __str__(self):
         return f"{self.name} - {self.pet_name or 'General'}"
 
+
+class NavigationLink(models.Model):
+    PLACEMENT_CHOICES = [
+        ('navbar', 'Navbar'),
+        ('footer', 'Footer'),
+    ]
+    placement = models.CharField(max_length=20, choices=PLACEMENT_CHOICES, default='navbar')
+    title = models.CharField(max_length=100)
+    url_name = models.CharField(max_length=200, blank=True, help_text="Django URL name (e.g. 'home', 'about')")
+    url_external = models.URLField(blank=True, help_text="External URL (overrides url_name if set)")
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
+    order = models.PositiveIntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ['placement', 'order']
+
+    def __str__(self):
+        return self.title
+
+
+class SocialLink(models.Model):
+    platform = models.CharField(max_length=50)
+    url = models.URLField()
+    icon_svg = models.TextField(blank=True, help_text="SVG markup for the icon")
+    order = models.PositiveIntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return self.platform
+
+
 class ContactMessage(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
